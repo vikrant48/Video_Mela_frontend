@@ -36,61 +36,96 @@ function Login() {
 
     return (
         <>
-            <div className="w-full h-screen text-white p-3 flex justify-center items-start">
-                <div className="flex max-w-5xl flex-col space-y-5 justify-center items-center border border-slate-600 p-3 mt-20">
-                    <div className="flex items-center gap-2 mt-5">
+            <div className="w-full h-screen text-white flex justify-center items-start sm:mt-8">
+                <div className="flex flex-col space-y-6 justify-center items-center border border-gray-600 p-6 mt-24 rounded-lg shadow-lg bg-gray-800 sm:w-3/4 lg:w-1/3">
+                    {/* Logo Section */}
+                    <div className="flex items-center gap-2">
                         <Logo />
                     </div>
 
+                    {/* Login Form */}
                     <form
                         onSubmit={handleSubmit(submit)}
-                        className="space-y-5 p-2"
+                        className="space-y-5 w-full sm:w-96 text-sm"
                     >
-                        <Input
-                            label="Username / email : "
-                            type="text"
-                            placeholder="example@gmail.com"
-                            {...register("username", {
-                                required: "username is required",
-                            })}
-                        />
-                        {errors.username && (
-                            <span className="text-red-500">
-                                {errors.username.message}
-                            </span>
-                        )}
-                        <Input
-                            label="Password: "
-                            type="password"
-                            placeholder="1kd074fjw0"
-                            {...register("password", {
-                                required: "password is required",
-                            })}
-                        />
-                        {errors.password && (
-                            <span>{errors.password.message}</span>
-                        )}
+                        {/* Username / Email Input */}
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="username"
+                                className="text-sm font-medium mb-2"
+                            >
+                                Username / Email:
+                            </label>
+                            <Input
+                                id="username"
+                                type="text"
+                                placeholder="example@gmail.com"
+                                className="rounded bg-gray-900 text-white p-2 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                                {...register("username", {
+                                    required: "Username is required",
+                                })}
+                                aria-invalid={errors.username ? "true" : "false"}
+                            />
+                            {errors.username && (
+                                <span
+                                    className="text-sm text-red-500 mt-1"
+                                    role="alert"
+                                >
+                                    {errors.username.message}
+                                </span>
+                            )}
+                        </div>
 
+                        {/* Password Input */}
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="password"
+                                className="text-sm font-medium mb-2"
+                            >
+                                Password:
+                            </label>
+                            <Input
+                                id="password"
+                                type="password"
+                                placeholder="Enter your password"
+                                className="rounded bg-gray-900 text-white p-2 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                                {...register("password", {
+                                    required: "Password is required",
+                                })}
+                                aria-invalid={errors.password ? "true" : "false"}
+                            />
+                            {errors.password && (
+                                <span
+                                    className="text-sm text-red-500 mt-1"
+                                    role="alert"
+                                >
+                                    {errors.password.message}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Login Button */}
                         <Button
                             type="submit"
-                            bgColor="bg-purple-500"
-                            className="w-full sm:py-3 py-2 hover:bg-purple-700 text-lg"
+                            className="w-full py-3 bg-purple-500 hover:bg-purple-700 text-lg font-medium rounded-lg transition duration-200"
                         >
                             Login
                         </Button>
 
+                        {/* Signup Redirect */}
                         <p className="text-center text-sm">
                             Don&apos;t have an account?{" "}
                             <Link
                                 to={"/signup"}
-                                className="text-purple-600 cursor-pointer hover:opacity-70"
+                                className="text-purple-400 font-medium hover:opacity-80 transition duration-200"
                             >
-                                SignUp
+                                Sign Up
                             </Link>
                         </p>
                     </form>
                 </div>
             </div>
+
         </>
     );
 }

@@ -43,143 +43,115 @@ function SignUp() {
     return (
         <>
             <div className="w-full h-screen text-white p-3 flex justify-center items-start sm:mt-8">
-                <div className="flex flex-col space-y-2 justify-center items-center border border-slate-600 p-3">
+                <div className="flex flex-col space-y-4 justify-center items-center border border-slate-600 p-5 rounded-lg shadow-lg bg-gray-800 sm:w-3/4 lg:w-1/2">
+                    {/* Logo Section */}
                     <div className="flex items-center gap-2">
                         <Logo />
                     </div>
+
+                    {/* Signup Form */}
                     <form
                         onSubmit={handleSubmit(submit)}
-                        className="space-y-4 p-2 text-sm sm:w-96 w-full"
+                        className="space-y-5 w-full sm:w-96 text-sm"
                     >
-                        <div className="w-full relative h-28 bg-[#222222]">
-                            <div className="w-full h-full">
-                                <GetImagePreview
-                                    name="coverImage"
-                                    control={control}
-                                    className="w-full h-28 object-cover border-none border-slate-900"
-                                    cameraIcon
-                                />
-                                <div className="text-sm absolute right-2 bottom-2 hover:text-purple-500 cursor-default">
-                                    cover Image
-                                </div>
+                        {/* Cover Image and Avatar Section */}
+                        <div className="relative h-28 bg-[#222222] overflow-hidden">
+                            {/* Cover Image */}
+                            <GetImagePreview
+                                name="coverImage"
+                                control={control}
+                                className="w-full h-28 object-cover"
+                                cameraIcon
+                            />
+                            <div className="absolute right-2 bottom-2 text-sm text-gray-400 hover:text-purple-500">
+                                Cover Image
                             </div>
-                            <div className="absolute left-2 bottom-2 rounded-full border-2">
+
+                            {/* Avatar */}
+                            <div className="absolute left-2 bottom-2">
                                 <GetImagePreview
                                     name="avatar"
                                     control={control}
-                                    className="object-cover rounded-full h-20 w-20 outline-none"
+                                    className="object-cover rounded-full h-20 w-20 border-2 border-gray-500"
                                     cameraIcon={true}
                                     cameraSize={20}
                                 />
                             </div>
-
-                            {/* <label
-                                htmlFor="avatar"
-                                className="cursor-pointer"
-                            >
-                                <div className="absolute h-24 w-24 left-2 bottom-2 flex justify-center items-center">
-                                    <img
-                                        src={avatarPreview}
-                                        className=" object-cover w-full h-full border-2 border-double rounded-full"
-                                    />
-                                    <FaCamera
-                                        className="absolute hover:text-purple-500"
-                                        size={20}
-                                    />
-                                </div>
-                                <Controller
-                                    name="avatar"
-                                    control={control}
-                                    render={({ field: { onChange } }) => (
-                                        <input
-                                            id="avatar"
-                                            type="file"
-                                            className="hidden"
-                                            accept="image/png, image/jpeg"
-                                            onChange={(e) => {
-                                                onChange(handleAvatarChange(e));
-                                            }}
-                                        />
-                                    )}
-                                    rules={{ required: "avatar is required" }}
-                                />
-                            </label> */}
                         </div>
+
+                        {/* Error for Avatar */}
                         {errors.avatar && (
-                            <div className="text-red-500">
-                                {errors.avatar.message}
-                            </div>
+                            <div className="text-red-500">{errors.avatar.message}</div>
                         )}
+
+                        {/* Input Fields */}
                         <Input
-                            label="Username: "
+                            label="Username:"
                             type="text"
                             placeholder="Enter username"
                             {...register("username", {
-                                required: "username is required",
+                                required: "Username is required",
                             })}
-                            className="h-8"
+                            className="h-10"
                         />
                         {errors.username && (
-                            <span className="text-red-500">
-                                {errors.username.message}
-                            </span>
+                            <span className="text-red-500">{errors.username.message}</span>
                         )}
+
                         <Input
-                            label="Email: "
+                            label="Email:"
                             type="email"
                             placeholder="Enter email"
                             {...register("email", {
-                                required: "email is required",
+                                required: "Email is required",
                             })}
-                            className="h-8"
+                            className="h-10"
                         />
                         {errors.email && (
-                            <span className="text-red-500">
-                                {errors.email.message}
-                            </span>
+                            <span className="text-red-500">{errors.email.message}</span>
                         )}
+
                         <Input
-                            label="Fullname: "
+                            label="Full Name:"
                             type="text"
-                            placeholder="Enter fullname"
+                            placeholder="Enter full name"
                             {...register("fullName", {
-                                required: "fullName is required",
+                                required: "Full Name is required",
                             })}
-                            className="h-8"
+                            className="h-10"
                         />
                         {errors.fullName && (
-                            <span className="text-red-500">
-                                {errors.fullName.message}
-                            </span>
+                            <span className="text-red-500">{errors.fullName.message}</span>
                         )}
+
                         <Input
-                            label="Password: "
+                            label="Password:"
                             type="password"
                             placeholder="Enter password"
                             {...register("password", {
-                                required: "password is required",
+                                required: "Password is required",
                             })}
-                            className="h-8"
+                            className="h-10"
                         />
                         {errors.password && (
-                            <span className="text-red-500">
-                                {errors.password.message}
-                            </span>
+                            <span className="text-red-500">{errors.password.message}</span>
                         )}
 
+                        {/* Signup Button */}
                         <Button
                             type="submit"
                             bgColor="bg-purple-500"
-                            className="w-full sm:py-3 py-2 hover:bg-purple-700 text-lg"
+                            className="w-full py-3 hover:bg-purple-700 text-lg rounded-md"
                         >
                             Signup
                         </Button>
 
+                        {/* Redirect to Login */}
                         <p className="text-center text-sm">
                             Already have an account?{" "}
                             <Link
-                                to={"/login"}
-                                className="text-purple-600 cursor-pointer hover:opacity-70"
+                                to="/login"
+                                className="text-purple-600 hover:opacity-70"
                             >
                                 Login
                             </Link>
@@ -187,6 +159,7 @@ function SignUp() {
                     </form>
                 </div>
             </div>
+
         </>
     );
 }
