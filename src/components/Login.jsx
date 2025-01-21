@@ -38,17 +38,13 @@ function Login() {
         <>
             <div className="w-full h-screen text-white flex justify-center items-start sm:mt-8">
                 <div className="flex flex-col space-y-6 justify-center items-center border border-gray-600 p-6 mt-24 rounded-lg shadow-lg bg-gray-800 sm:w-3/4 lg:w-1/3">
-                    {/* Logo Section */}
                     <div className="flex items-center gap-2">
                         <Logo />
                     </div>
-
-                    {/* Login Form */}
                     <form
                         onSubmit={handleSubmit(submit)}
                         className="space-y-5 w-full sm:w-96 text-sm"
                     >
-                        {/* Username / Email Input */}
                         <div className="flex flex-col">
                             <label
                                 htmlFor="username"
@@ -76,7 +72,6 @@ function Login() {
                             )}
                         </div>
 
-                        {/* Password Input */}
                         <div className="flex flex-col">
                             <label
                                 htmlFor="password"
@@ -104,7 +99,6 @@ function Login() {
                             )}
                         </div>
 
-                        {/* Login Button */}
                         <Button
                             type="submit"
                             className="w-full py-3 bg-purple-500 hover:bg-purple-700 text-lg font-medium rounded-lg transition duration-200"
@@ -112,7 +106,6 @@ function Login() {
                             Login
                         </Button>
 
-                        {/* Signup Redirect */}
                         <p className="text-center text-sm">
                             Don&apos;t have an account?{" "}
                             <Link

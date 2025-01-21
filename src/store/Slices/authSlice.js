@@ -56,7 +56,7 @@ export const refreshAccessToken = createAsyncThunk(
     async (data) => {
         try {
             const response = await axiosInstance.post(
-                "/users/refresh-token",
+                "/users/refresh_token",
                 data
             );
             return response.data;
@@ -72,7 +72,7 @@ export const changePassword = createAsyncThunk(
     async (data) => {
         try {
             const response = await axiosInstance.post(
-                "/users/change-password",
+                "/users/change_password",
                 data
             );
             toast.success(response.data?.message);
@@ -85,14 +85,14 @@ export const changePassword = createAsyncThunk(
 );
 
 export const getCurrentUser = createAsyncThunk("getCurrentUser", async () => {
-    const response = await axiosInstance.get("/users/current-user");
+    const response = await axiosInstance.get("/users/current_user");
     return response.data.data;
 });
 
 export const updateAvatar = createAsyncThunk("updateAvatar", async (avatar) => {
     try {
         const response = await axiosInstance.patch(
-            "/users/update-avatar",
+            "/users/avatar",
             avatar
         );
         toast.success("Updated details successfully!!!");
@@ -108,7 +108,7 @@ export const updateCoverImg = createAsyncThunk(
     async (coverImage) => {
         try {
             const response = await axiosInstance.patch(
-                "/users/update-coverImg",
+                "/users/coverImage",
                 coverImage
             );
             toast.success(response.data?.message);
@@ -125,7 +125,7 @@ export const updateUserDetails = createAsyncThunk(
     async (data) => {
         try {
             const response = await axiosInstance.patch(
-                "/users/update-user",
+                "/users/update_account",
                 data
             );
             toast.success("Updated details successfully!!!");

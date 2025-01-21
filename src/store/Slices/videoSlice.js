@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../helpers/axiosInstance";
 import toast from "react-hot-toast";
-import { BASE_URL } from "../../baseUrl.js";
 
 const initialState = {
     loading: false,
@@ -17,30 +16,35 @@ const initialState = {
 
 export const getAllVideos = createAsyncThunk(
     "getAllVideos",
-    async ({ userId, sortBy, sortType, query, page, limit }) => {
+    async ({ userId, sortBy = "createdAt", sortType = "asc", query = "", page = 1, limit = 10 }) => {
         try {
-            const url = new URL(`${BASE_URL}/video`);
+            const params = new URLSearchParams()
 
-            if (userId) url.searchParams.set("userId", userId);
-            if (query) url.searchParams.set("query", query);
-            if (page) url.searchParams.set("page", page);
-            if (limit) url.searchParams.set("limit", limit);
+            if (userId) params.append("userId", userId);
+            if (query) params.append("query", query);
+            if (page) params.append("page", page);
+            if (limit) params.append("limit", limit);
             if (sortBy && sortType) {
-                url.searchParams.set("sortBy", sortBy);
-                url.searchParams.set("sortType", sortType);
+                params.append("sortBy", sortBy);
+                params.append("sortType", sortType);
             }
 
-            const response = await axiosInstance.get(url);
+            // const response = await axiosInstance.get(url);
+            const response = await axiosInstance.get(`/video?${params.toString()}`)
+
+            // console.log(" getallVideos data : ", response.data.data)
 
             return response.data.data;
         } catch (error) {
-            toast.error(error?.response?.data?.error);
+            toast.error(error?.response?.data?.error || "Failed to fetch videos.");
             throw error;
         }
     }
 );
 
-export const publishAvideo = createAsyncThunk("publishAvideo", async (data) => {
+export const publishAvideo = createAsyncThunk(
+    "publishAvideo", 
+    async (data) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
@@ -140,7 +144,10 @@ const videoSlice = createSlice({
         });
         builder.addCase(getAllVideos.fulfilled, (state, action) => {
             state.loading = false;
-            state.videos.docs = [...state.videos.docs, ...action.payload.docs];
+            state.videos.docs = [
+                ...state.videos.docs,
+                ...action.payload.docs
+            ];
             state.videos.hasNextPage = action.payload.hasNextPage;
         });
         builder.addCase(publishAvideo.pending, (state) => {

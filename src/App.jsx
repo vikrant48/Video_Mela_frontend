@@ -32,12 +32,9 @@ function App() {
     return (
         <>
             <Routes>
-                <Route
-                    path="/"
-                    element={<Layout />}
-                >
+                <Route path="/" element={<Layout />}>
                     <Route
-                        path=""
+                        index
                         element={
                             <AuthLayout authentication={false}>
                                 <HomePage />
@@ -45,7 +42,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/search/:query"
+                        path="search/:query"
                         element={
                             <AuthLayout authentication={false}>
                                 <SearchVideos />
@@ -53,7 +50,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/channel/:username"
+                        path="channel/:username"
                         element={
                             <AuthLayout authentication>
                                 <Channel />
