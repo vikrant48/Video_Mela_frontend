@@ -9,7 +9,8 @@ function HeaderSection({ username, setPopUp }) {
                     Welcome Back, {username}{" "}
                 </h1>
                 <p className="text-xs font-light text-slate-400 ">
-                    Seamless Video Management, Elevated Results.
+                    Dive into a seamless video journey where creativity meets convenience.
+                    Effortless video management, personalized recommendations, and limitless entertainment—all at your fingertips.
                 </p>
             </div>
             <div>

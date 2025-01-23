@@ -7,6 +7,10 @@ import {
     IoFolderOutline,
     RiHome6Line,
     TbUserCheck,
+    RiFileHistoryLine,
+    AiOutlineQuestionCircle,
+    MdFeedback,
+
 } from "../icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -82,7 +86,7 @@ function Sidebar() {
         <>
             <div className="hidden sm:block">
                 <div className="text-white bg-gradient-to-b from-gray-900 to-gray-800 lg:w-56 md:w-44 w-20 sm:p-4 p-3 border-r border-gray-700 shadow-lg h-screen flex flex-col justify-between">
-                    <div className="flex flex-col gap-4 mt-5">
+                    <div className="flex flex-col gap-4 mt-5 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-800" style={{ maxHeight: 'calc(100vh - 120px)' }}>
                         {sidebarTopItems.map((item) => (
                             <NavLink
                                 to={item.url}
@@ -102,7 +106,7 @@ function Sidebar() {
                         ))}
                     </div>
 
-                    <div className="space-y-4 mb-10">
+                    <div className="flex flex-col gap-2 mt-16 ">
                         {username && (
                             <div
                                 className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600"
@@ -114,12 +118,40 @@ function Sidebar() {
                                 </span>
                             </div>
                         )}
-                        <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
-                            <CiSettings size={25} />
-                            <span className="text-sm md:text-base hidden md:block">
-                                Settings
-                            </span>
+
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                                <CiSettings size={25} />
+                                <span className="text-sm md:text-base hidden md:block">
+                                    Settings
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                                <RiFileHistoryLine size={25} />
+                                <span className="text-sm md:text-base hidden md:block">
+                                    Report History
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                                <AiOutlineQuestionCircle size={25} />
+                                <span className="text-sm md:text-base hidden md:block">
+                                    Help
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                                <MdFeedback size={25} />
+                                <span className="text-sm md:text-base hidden md:block">
+                                    Send Feedback
+                                </span>
+                            </div>
                         </div>
+                    </div>
+
+                    <div className="text-xs text-center text-gray-400 border-t border-gray-700 pt-4">
+                        &copy; {new Date().getFullYear()} Your Company Name. All rights reserved.
                     </div>
                 </div>
             </div>
