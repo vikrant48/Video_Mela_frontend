@@ -40,7 +40,6 @@ function ChannelHeader({
     return (
         <>
             <div className="w-full text-white">
-                {/* coverImage section */}
                 <section className="w-full">
                     {coverImage ? (
                         <div className="relative">
@@ -61,7 +60,7 @@ function ChannelHeader({
                         <div className="sm:h-40 h-28 w-full border-slate-600 border-b bg-black"></div>
                     )}
                 </section>
-                {/*channel details section  */}
+
                 <section className=" w-full sm:px-5 p-2 flex sm:flex-row flex-col items-start sm:gap-4">
                     <div className=" h-12">
                         <div className="relative sm:w-32 w-28 sm:h-32 h-28">

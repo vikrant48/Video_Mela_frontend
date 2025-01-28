@@ -14,7 +14,7 @@ function EditChannel() {
                     <div className="w-52 border border-slate-600 bg-black flex gap-2 p-3">
                         <Spinner />
                         <span className="text-md font-bold text-white">
-                            wait dude...
+                            wait ...!!!
                         </span>
                     </div>
                 </div>
