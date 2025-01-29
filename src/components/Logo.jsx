@@ -2,7 +2,7 @@ import React from "react";
 import { IoIosVideocam } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-function Logo({ size = "30" }) {
+function Logo({ size = "40" }) {
     return (
         <>
             <Link to={'/'} className="flex gap-2 items-center">
@@ -10,7 +10,7 @@ function Logo({ size = "30" }) {
                     size={size}
                     color="#A855F7"
                 />
-                <span className="font-bold text-white">VideoMela</span>
+                <span className="font-extrabold text-xl text-white">VideoMela</span>
             </Link>
         </>
     );

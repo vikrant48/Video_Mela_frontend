@@ -47,12 +47,10 @@ function Navbar() {
                     <Logo />
                 </div>
 
-                {/* Search for large screens */}
                 <div className="w-full sm:w-1/3 hidden sm:block">
                     <Search />
                 </div>
 
-                {/* Search for small screens */}
                 <div className="text-white flex justify-end sm:hidden">
                     <CiSearch
                         size={28}
@@ -67,7 +65,6 @@ function Navbar() {
                     )}
                 </div>
 
-                {/* Login/Signup for large screens */}
                 {authStatus ? (
                     <div className="rounded-full hidden sm:block">
                         <img
@@ -79,19 +76,18 @@ function Navbar() {
                 ) : (
                     <div className="hidden sm:flex gap-3">
                         <Link to="/login">
-                            <Button className="bg-gray-800 border border-gray-700 hover:bg-purple-600 hover:text-white px-4 py-2 transition">
+                            <Button className="bg-gray-800 border border-gray-700 hover:bg-purple-600 hover:text-white px-4 py-2 transition rounded-3xl">
                                 Login
                             </Button>
                         </Link>
                         <Link to="/signup">
-                            <Button className="bg-transparent border border-gray-700 hover:bg-purple-600 hover:text-white px-4 py-2 transition">
+                            <Button className="bg-transparent border border-gray-700 hover:bg-purple-600 hover:text-white px-4 py-2 transition rounded-3xl">
                                 Sign Up
                             </Button>
                         </Link>
                     </div>
                 )}
 
-                {/* Hamburger menu for smaller screens */}
                 <div className="sm:hidden block">
                     <SlMenu
                         size={26}
@@ -100,7 +96,6 @@ function Navbar() {
                     />
                 </div>
 
-                {/* Sidebar for smaller screens */}
                 {toggleMenu && (
                     <div className="fixed right-0 top-0 text-white flex flex-col border-l border-gray-700 h-screen w-[70%] bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 sm:hidden shadow-lg">
                         <div className="flex items-center justify-between px-4 py-5 border-b border-gray-700">
@@ -135,12 +130,12 @@ function Navbar() {
                             {!authStatus ? (
                                 <div className="flex flex-col space-y-3">
                                     <Link to="/login">
-                                        <Button className="w-full bg-gray-800 border border-gray-700 hover:bg-purple-600 hover:text-white py-2 transition">
+                                        <Button className="w-full bg-gray-800 border border-gray-700 hover:bg-purple-600 hover:text-white py-2 transition rounded-lg">
                                             Login
                                         </Button>
                                     </Link>
                                     <Link to="/signup">
-                                        <Button className="w-full bg-transparent border border-gray-700 hover:bg-purple-600 hover:text-white py-2 transition">
+                                        <Button className="w-full bg-transparent border border-gray-700 hover:bg-purple-600 hover:text-white py-2 transition rounded-lg">
                                             Sign Up
                                         </Button>
                                     </Link>

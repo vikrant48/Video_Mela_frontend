@@ -156,7 +156,6 @@ function Sidebar() {
                 </div>
             </div>
 
-            {/* Bottom Navigation Bar for Mobile */}
             <div className="fixed bottom-0 z-20 w-full border-t-2 border-gray-700 bg-gradient-to-r from-gray-900 to-gray-800 text-white h-16 flex justify-around items-center shadow-lg sm:hidden">
                 {bottomBarItems.map((item) => (
                     <NavLink
