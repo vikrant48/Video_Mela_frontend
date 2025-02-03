@@ -4,7 +4,8 @@
 The frontend of Video Mela is a user-friendly video-sharing platform built using modern web technologies. It provides seamless video browsing, uploads, real-time comments, infinite scrolling, and more.
 
 ---
-[Backend Link](https://github.com/vikrant48/Video_Mela_backend)
+- [Model link](https://app.eraser.io/workspace/OO3HFmjKmUYmLl8JiwRk?origin=share)
+- [Backend Link](https://github.com/vikrant48/Video_Mela_backend)
 
 
 ## Features
