@@ -14,7 +14,7 @@ function MySubscriptions() {
         if (subscriptions) {
             dispatch(getSubscribedChannels(subscriberId));
         }
-    }, [dispatch, subscriberId]);
+    }, [dispatch, subscriberId, subscriptions]);
     window.scrollTo(0, 0);
     
     return (

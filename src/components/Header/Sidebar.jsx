@@ -1,4 +1,3 @@
-import React from "react";
 import {
     BiHistory,
     BiLike,
@@ -85,8 +84,8 @@ function Sidebar() {
     return (
         <>
             <div className="hidden sm:block">
-                <div className="text-white bg-gradient-to-b from-gray-900 to-gray-800 lg:w-56 md:w-44 w-20 sm:p-4 p-3 border-r border-gray-700 shadow-lg h-screen flex flex-col justify-between">
-                    <div className="flex flex-col gap-4 mt-5 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500 scrollbar-track-gray-800" style={{ maxHeight: 'calc(100vh - 120px)' }}>
+                <div className="text-white bg-gradient-to-b from-gray-900 to-gray-800 lg:w-56 md:w-44 w-20 sm:p-4 p-3 border-r border-gray-700 shadow-lg h-full flex flex-col justify-between overflow-y-auto">
+                    <div className="flex flex-col gap-4 mt-5 flex-1">
                         {sidebarTopItems.map((item) => (
                             <NavLink
                                 to={item.url}
@@ -120,33 +119,69 @@ function Sidebar() {
                         )}
 
                         <div className="flex flex-col gap-1">
-                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                            <NavLink
+                                to="/settings/account"
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                        isActive
+                                            ? "bg-purple-500 text-white shadow-md"
+                                            : "hover:bg-gray-700 hover:text-white"
+                                    }`
+                                }
+                            >
                                 <CiSettings size={25} />
                                 <span className="text-sm md:text-base hidden md:block">
                                     Settings
                                 </span>
-                            </div>
+                            </NavLink>
 
-                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                            <NavLink
+                                to="/report-history"
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                        isActive
+                                            ? "bg-purple-500 text-white shadow-md"
+                                            : "hover:bg-gray-700 hover:text-white"
+                                    }`
+                                }
+                            >
                                 <RiFileHistoryLine size={25} />
                                 <span className="text-sm md:text-base hidden md:block">
                                     Report History
                                 </span>
-                            </div>
+                            </NavLink>
 
-                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                            <NavLink
+                                to="/help"
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                        isActive
+                                            ? "bg-purple-500 text-white shadow-md"
+                                            : "hover:bg-gray-700 hover:text-white"
+                                    }`
+                                }
+                            >
                                 <AiOutlineQuestionCircle size={25} />
                                 <span className="text-sm md:text-base hidden md:block">
                                     Help
                                 </span>
-                            </div>
+                            </NavLink>
 
-                            <div className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600">
+                            <NavLink
+                                to="/feedback"
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                        isActive
+                                            ? "bg-purple-500 text-white shadow-md"
+                                            : "hover:bg-gray-700 hover:text-white"
+                                    }`
+                                }
+                            >
                                 <MdFeedback size={25} />
                                 <span className="text-sm md:text-base hidden md:block">
                                     Send Feedback
                                 </span>
-                            </div>
+                            </NavLink>
                         </div>
                     </div>
 

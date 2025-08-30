@@ -12,6 +12,10 @@ import VideoDetail from "./VideoDetail";
 import SearchVideos from "./SearchVideos";
 import TermsAndConditions from "./TermsAndConditions ";
 import ChannelPlaylist from "./Channel/ChannelPlaylist";
+import Settings from "./Settings";
+import Help from "./Help";
+import Feedback from "./Feedback";
+import ReportHistory from "./ReportHistory";
 
 export {
     Channel,
@@ -27,5 +31,9 @@ export {
     VideoDetail,
     SearchVideos,
     TermsAndConditions,
-    ChannelPlaylist
+    ChannelPlaylist,
+    Settings,
+    Help,
+    Feedback,
+    ReportHistory
 }

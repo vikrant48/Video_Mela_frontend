@@ -10,9 +10,11 @@ function SearchForSmallScreen({ open, setOpenSearch }) {
     const navigate = useNavigate();
 
     const search = (data) => {
-        const query = data?.query;
-        navigate(`/search/${query}`);
-        setOpenSearch((prev) => !prev);
+        const query = data?.query?.trim();
+        if (query) {
+            navigate(`/search/${encodeURIComponent(query)}`);
+            setOpenSearch((prev) => !prev);
+        }
     };
 
     return (
@@ -32,8 +34,8 @@ function SearchForSmallScreen({ open, setOpenSearch }) {
                         >
                             <Input
                                 type="text"
-                                placeholder="Search"
-                                className="px-4 py-2 border border-gray-300 focus:outline-none"
+                                placeholder="Search videos..."
+                                className="px-4 py-2 border border-gray-600 focus:border-purple-500 focus:outline-none rounded-lg"
                                 {...register("query", { required: true })}
                             />
                             <Button

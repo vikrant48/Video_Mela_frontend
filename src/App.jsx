@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { AuthLayout, Login, SignUp } from "./components/index";
 import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -19,8 +19,18 @@ import {
     SearchVideos,
     TermsAndConditions,
     ChannelPlaylist,
+    Settings,
+    Help,
+    Feedback,
+    ReportHistory,
 } from "./pages";
 import { EditPersonalInfo, ChangePassword, Layout } from "./components";
+import {
+    AccountSettings,
+    PrivacySettings,
+    NotificationSettings,
+    AppearanceSettings,
+} from "./components/settings";
 
 function App() {
     const dispatch = useDispatch();
@@ -57,6 +67,10 @@ function App() {
                             </AuthLayout>
                         }
                     >
+                        <Route
+                            index
+                            element={<Navigate to="videos" replace />}
+                        />
                         <Route
                             path="videos"
                             element={
@@ -139,6 +153,71 @@ function App() {
                             }
                         />
                     </Route>
+                    <Route
+                        path="/settings"
+                        element={
+                            <AuthLayout authentication>
+                                <Settings />
+                            </AuthLayout>
+                        }
+                    >
+                        <Route
+                            path="account"
+                            element={
+                                <AuthLayout authentication>
+                                    <AccountSettings />
+                                </AuthLayout>
+                            }
+                        />
+                        <Route
+                            path="privacy"
+                            element={
+                                <AuthLayout authentication>
+                                    <PrivacySettings />
+                                </AuthLayout>
+                            }
+                        />
+                        <Route
+                            path="notifications"
+                            element={
+                                <AuthLayout authentication>
+                                    <NotificationSettings />
+                                </AuthLayout>
+                            }
+                        />
+                        <Route
+                            path="appearance"
+                            element={
+                                <AuthLayout authentication>
+                                    <AppearanceSettings />
+                                </AuthLayout>
+                            }
+                        />
+                    </Route>
+                    <Route
+                        path="/help"
+                        element={
+                            <AuthLayout authentication={false}>
+                                <Help />
+                            </AuthLayout>
+                        }
+                    />
+                    <Route
+                        path="/feedback"
+                        element={
+                            <AuthLayout authentication={false}>
+                                <Feedback />
+                            </AuthLayout>
+                        }
+                    />
+                    <Route
+                        path="/report-history"
+                        element={
+                            <AuthLayout authentication={false}>
+                                <ReportHistory />
+                            </AuthLayout>
+                        }
+                    />
                 </Route>
                 <Route
                     path="/login"

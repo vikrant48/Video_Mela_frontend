@@ -60,7 +60,7 @@ function TweetsList({
                     <div className="flex items-center gap-2">
                         <h2 className="text-xs">{username}</h2>
                         <span className="text-xs text-slate-400">
-                            {timeAgo(createdAt)}
+                            {createdAt ? timeAgo(createdAt) : 'Unknown date'}
                         </span>
                     </div>
 

@@ -18,9 +18,10 @@ function SearchVideos() {
     useEffect(() => {
         const sortType = searchParams.get("sortType");
         const sortBy = searchParams.get("sortBy");
+        const decodedQuery = decodeURIComponent(query || "");
         dispatch(
             getAllVideos({
-                query,
+                query: decodedQuery,
                 sortBy,
                 sortType,
             })

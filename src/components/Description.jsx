@@ -46,7 +46,7 @@ function Description({
                                     {views} views .{" "}
                                 </span>
                                 <span className="text-sm text-slate-400">
-                                    {timeAgo(createdAt)}
+                                    {createdAt ? timeAgo(createdAt) : 'Unknown date'}
                                 </span>
                             </div>
                             <div className=" rounded-full w-24 flex justify-center bg-[#222222] py-1">

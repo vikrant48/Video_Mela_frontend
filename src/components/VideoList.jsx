@@ -47,7 +47,7 @@ function VideoList({
                         <h2 className="font-medium">{title}</h2>
                         <div className="text-xs space-x-1 text-slate-400">
                             <span>{views} Views</span> .
-                            <span>{timeAgo(createdAt)}</span>
+                            <span>{createdAt ? timeAgo(createdAt) : 'Unknown date'}</span>
                         </div>
                         {channelName && (
                             <h2 className="text-xs space-x-1 text-slate-200">
