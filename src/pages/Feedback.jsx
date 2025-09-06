@@ -36,7 +36,7 @@ function Feedback() {
                 message: '',
                 feedbackType: 'general'
             });
-        } catch (error) {
+        } catch {
             setSubmitStatus('error');
         } finally {
             setIsSubmitting(false);
@@ -59,14 +59,14 @@ function Feedback() {
                     {submitStatus === 'success' && (
                         <div className="bg-green-600 text-white p-4 rounded-lg mb-6">
                             <h3 className="font-semibold mb-2">Thank you for your feedback!</h3>
-                            <p>We've received your message and will review it shortly. Your input helps us make VideoMela better for everyone.</p>
+                            <p>We&apos;ve received your message and will review it shortly. Your input helps us make VideoMela better for everyone.</p>
                         </div>
                     )}
 
                     {submitStatus === 'error' && (
                         <div className="bg-red-600 text-white p-4 rounded-lg mb-6">
                             <h3 className="font-semibold mb-2">Oops! Something went wrong</h3>
-                            <p>We couldn't submit your feedback right now. Please try again later or contact us directly.</p>
+                            <p>We couldn&apos;t submit your feedback right now. Please try again later or contact us directly.</p>
                         </div>
                     )}
 

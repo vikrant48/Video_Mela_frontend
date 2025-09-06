@@ -1,4 +1,3 @@
-import React from "react";
 import { Logo, Button, Input } from "./index";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -62,9 +61,10 @@ function SignUp() {
                                 control={control}
                                 className="w-full h-28 object-cover"
                                 cameraIcon
+                                rules={{}}
                             />
                             <div className="absolute right-2 bottom-2 text-sm text-gray-400 hover:text-purple-500">
-                                Cover Image
+                                Cover Image (Optional)
                             </div>
 
                             {/* Avatar */}
@@ -75,6 +75,9 @@ function SignUp() {
                                     className="object-cover rounded-full h-20 w-20 border-2 border-gray-500"
                                     cameraIcon={true}
                                     cameraSize={20}
+                                    rules={{
+                                        required: "Avatar image is required"
+                                    }}
                                 />
                             </div>
                         </div>

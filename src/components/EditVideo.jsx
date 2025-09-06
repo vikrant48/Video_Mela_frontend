@@ -87,6 +87,7 @@ function EditVideo({
                                 label={"Thumbnail: "}
                                 cameraIcon
                                 cameraSize={30}
+                                rules={{ required: "Thumbnail is required" }}
                                 className={
                                     "object-contain w-full min-w-xl h-72 min-h-32"
                                 }

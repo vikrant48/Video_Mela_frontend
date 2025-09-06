@@ -61,6 +61,7 @@ function EditAvatar({ cover, preImage }) {
                                     control={control}
                                     cameraIcon
                                     cameraSize={30}
+                                    rules={{ required: "Avatar is required" }}
                                     className={
                                         "w-full h-full object-contain min-h-20 max-h-60 bg-[#222222]"
                                     }
