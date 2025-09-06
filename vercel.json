@@ -81,11 +81,7 @@
       ]
     }
   ],
-  "functions": {
-    "app/api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
+
   "cleanUrls": true,
   "trailingSlash": false
 }
