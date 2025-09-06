@@ -6,11 +6,11 @@ function Layout() {
     return (
         <>
             <Navbar />
-            <div className="sm:flex flex-none h-screen">
-                <div className="flex-shrink-0">
+            <div className="sm:flex flex-none" style={{height: 'calc(100vh - 64px)'}}>
+                <div className="flex-shrink-0 h-full overflow-y-auto">
                     <Sidebar />
                 </div>
-                <div className="sm:flex-1 overflow-y-auto">
+                <div className="sm:flex-1 h-full overflow-y-auto">
                     <Outlet />
                 </div>
             </div>

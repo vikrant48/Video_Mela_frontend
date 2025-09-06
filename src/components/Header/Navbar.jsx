@@ -8,14 +8,17 @@ import {
     HiOutlineVideoCamera,
     SlMenu,
 } from "../icons.js";
+import { MdVideoCall } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { IoMdLogOut } from "react-icons/io";
+import { CiSettings, CiUser, CiRepeat } from "react-icons/ci";
 import { userLogout } from "../../store/Slices/authSlice.js";
 
 function Navbar() {
     const [toggleMenu, setToggleMenu] = useState(false);
     const [openSearch, setOpenSearch] = useState(false);
+    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const authStatus = useSelector((state) => state.auth.status);
     const username = useSelector((state) => state.auth?.userData?.username);
     const profileImg = useSelector((state) => state.auth.userData?.avatar.url);
@@ -37,6 +40,11 @@ function Navbar() {
             icon: <HiOutlineVideoCamera size={25} />,
             title: "My Content",
             url: `/channel/${username}`,
+        },
+        {
+            icon: <MdVideoCall size={25} />,
+            title: "Upload Video",
+            url: "/upload",
         },
     ];
 
@@ -66,12 +74,97 @@ function Navbar() {
                 </div>
 
                 {authStatus ? (
-                    <div className="rounded-full hidden sm:block">
-                        <img
-                            src={profileImg}
-                            alt="profile"
-                            className="rounded-full w-10 h-10 object-cover border border-gray-600 shadow-md"
-                        />
+                    <div className="flex items-center gap-4">
+                        {/* Upload Video Button */}
+                        <Link 
+                            to="/upload"
+                            className="hidden sm:flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+                        >
+                            <MdVideoCall size={20} />
+                            <span>Upload</span>
+                        </Link>
+                        
+                        <div className="relative">
+                            <div 
+                                className="rounded-full cursor-pointer hover:ring-2 hover:ring-purple-500 transition-all"
+                                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                            >
+                                <img
+                                    src={profileImg}
+                                    alt="profile"
+                                    className="rounded-full w-10 h-10 object-cover border border-gray-600 shadow-md"
+                                />
+                            </div>
+                        
+                        {/* Profile Dropdown */}
+                        {showProfileDropdown && (
+                            <>
+                                {/* Backdrop */}
+                                <div 
+                                    className="fixed inset-0 z-40"
+                                    onClick={() => setShowProfileDropdown(false)}
+                                ></div>
+                                
+                                {/* Dropdown Panel */}
+                                <div className="fixed right-4 top-16 z-50 w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 border border-gray-700 rounded-lg shadow-2xl transform transition-all duration-300 ease-out animate-slide-in-right">
+                                    {/* Header */}
+                                    <div className="p-4 border-b border-gray-700">
+                                        <div className="flex items-center gap-3">
+                                            <img
+                                                src={profileImg}
+                                                alt="profile"
+                                                className="rounded-full w-12 h-12 object-cover border border-gray-600"
+                                            />
+                                            <div>
+                                                <h3 className="text-white font-semibold text-lg">{username}</h3>
+                                                <p className="text-gray-400 text-sm">Manage your account</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Menu Items */}
+                                    <div className="p-2">
+                                        <Link 
+                                            to="/settings/account"
+                                            className="flex items-center gap-3 px-4 py-3 text-white hover:bg-gray-700 rounded-lg transition-colors"
+                                            onClick={() => setShowProfileDropdown(false)}
+                                        >
+                                            <CiUser size={20} />
+                                            <span>Edit Profile</span>
+                                        </Link>
+                                        
+                                        <div className="flex items-center gap-3 px-4 py-3 text-gray-400 cursor-not-allowed rounded-lg">
+                                            <CiRepeat size={20} />
+                                            <span>Switch Account</span>
+                                            <span className="ml-auto text-xs bg-gray-700 px-2 py-1 rounded">Coming Soon</span>
+                                        </div>
+                                        
+                                        <Link 
+                                            to="/settings"
+                                            className="flex items-center gap-3 px-4 py-3 text-white hover:bg-gray-700 rounded-lg transition-colors"
+                                            onClick={() => setShowProfileDropdown(false)}
+                                        >
+                                            <CiSettings size={20} />
+                                            <span>Settings</span>
+                                        </Link>
+                                        
+                                        <div className="border-t border-gray-700 mt-2 pt-2">
+                                            <button 
+                                                onClick={() => {
+                                                    setShowProfileDropdown(false);
+                                                    logout();
+                                                }}
+                                                className="flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors w-full text-left"
+                                            >
+                                                <IoMdLogOut size={20} />
+                                                <span>Logout</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                        </div>
                     </div>
                 ) : (
                     <div className="hidden sm:flex gap-3">

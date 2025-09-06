@@ -23,6 +23,7 @@ import {
     Help,
     Feedback,
     ReportHistory,
+    UploadVideoPage,
 } from "./pages";
 import { EditPersonalInfo, ChangePassword, Layout } from "./components";
 import {
@@ -252,13 +253,21 @@ function App() {
                     }
                 />
                 <Route
-                    path="/terms&conditions"
-                    element={
-                        <AuthLayout authentication>
-                            <TermsAndConditions />
-                        </AuthLayout>
-                    }
-                />
+                        path="/terms&conditions"
+                        element={
+                            <AuthLayout authentication>
+                                <TermsAndConditions />
+                            </AuthLayout>
+                        }
+                    />
+                    <Route
+                        path="/upload"
+                        element={
+                            <AuthLayout authentication>
+                                <UploadVideoPage />
+                            </AuthLayout>
+                        }
+                    />
             </Routes>
 
             <Toaster

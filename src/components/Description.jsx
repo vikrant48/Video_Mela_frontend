@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { timeAgo } from "../helpers/timeAgo";
-import { Like, Button } from "./index";
+import { Like, Button, AddToPlaylistModal } from "./index";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toggleSubscription } from "../store/Slices/subscriptionSlice";
+import { MdPlaylistAdd, MdDownload } from "react-icons/md";
 
 function Description({
     title,
@@ -18,9 +19,11 @@ function Description({
     isLiked,
     videoId,
     channelId,
+    videoFile,
 }) {
     const [localIsSubscribed, setLocalIsSubscribed] = useState(isSubscribed);
     const [localSubscribersCount, setLocalSubscribersCount] = useState(subscribersCount);
+    const [showPlaylistModal, setShowPlaylistModal] = useState(false);
     const dispatch = useDispatch();
 
     const handleSubscribe = () => {
@@ -34,6 +37,39 @@ function Description({
     };
 
     const handleSubsribe = () => {};
+
+    const handleDownload = async () => {
+        if (videoFile) {
+            try {
+                // Create a safe filename with username and title
+                const safeTitle = (title || 'video').replace(/[^a-zA-Z0-9\s-_]/g, '').trim();
+                const safeUsername = (channelName || 'unknown').replace(/[^a-zA-Z0-9\s-_]/g, '').trim();
+                const filename = `${safeUsername}_${safeTitle}.mp4`;
+                
+                // Fetch the video file
+                const response = await fetch(videoFile);
+                const blob = await response.blob();
+                
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                link.style.display = 'none';
+                
+                // Trigger download
+                document.body.appendChild(link);
+                link.click();
+                
+                // Cleanup
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Download failed:', error);
+                alert('Failed to download video. Please try again.');
+            }
+        }
+    };
     return (
         <>
             <section className="sm:max-w-4xl w-full text-white sm:p-5 p-2 space-y-2">
@@ -49,13 +85,32 @@ function Description({
                                     {createdAt ? timeAgo(createdAt) : 'Unknown date'}
                                 </span>
                             </div>
-                            <div className=" rounded-full w-24 flex justify-center bg-[#222222] py-1">
-                                <Like
-                                    isLiked={isLiked}
-                                    videoId={videoId}
-                                    likesCount={likesCount}
-                                    size={25}
-                                />
+                            <div className="flex gap-2">
+                                <div className="rounded-full w-24 flex justify-center bg-[#222222] py-1">
+                                    <Like
+                                        isLiked={isLiked}
+                                        videoId={videoId}
+                                        likesCount={likesCount}
+                                        size={25}
+                                    />
+                                </div>
+                                <button
+                                    onClick={() => setShowPlaylistModal(true)}
+                                    className="flex items-center gap-2 bg-[#222222] hover:bg-[#333333] px-3 py-1 rounded-full text-white transition-colors"
+                                    title="Add to playlist"
+                                >
+                                    <MdPlaylistAdd size={20} />
+                                    <span className="text-sm">Save</span>
+                                </button>
+                                <button
+                                    onClick={handleDownload}
+                                    className="flex items-center gap-2 bg-[#222222] hover:bg-[#333333] px-3 py-1 rounded-full text-white transition-colors"
+                                    title="Download video"
+                                    disabled={!videoFile}
+                                >
+                                    <MdDownload size={20} />
+                                    <span className="text-sm">Download</span>
+                                </button>
                             </div>
                         </div>
                         <div className="flex gap-2 justify-between items-center">
@@ -93,6 +148,13 @@ function Description({
                     {description}
                 </p>
             </section>
+            
+            {/* Add to Playlist Modal */}
+            <AddToPlaylistModal
+                isOpen={showPlaylistModal}
+                onClose={() => setShowPlaylistModal(false)}
+                videoId={videoId}
+            />
         </>
     );
 }

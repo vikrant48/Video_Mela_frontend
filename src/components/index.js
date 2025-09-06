@@ -38,6 +38,7 @@ import AuthLayout from "./AuthLayout";
 import InfiniteScroll from "./InfiniteScroll"
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import RecommendedVideos from "./RecommendedVideos";
+import AddToPlaylistModal from "./AddToPlaylistModal";
 
 export {
     Button,
@@ -79,5 +80,6 @@ export {
     AuthLayout,
     InfiniteScroll,
     SearchForSmallScreen,
-    RecommendedVideos
+    RecommendedVideos,
+    AddToPlaylistModal
 };

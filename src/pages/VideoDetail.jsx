@@ -67,6 +67,7 @@ function VideoDetail() {
                         isLiked={video?.isLiked}
                         videoId={video?._id}
                         channelId={video?.owner?._id}
+                        videoFile={video?.videoFile?.url}
                     />
                     <div className="text-white font-semibold sm:px-5 px-3 mt-6">
                         {totalComments} Comments

@@ -84,7 +84,7 @@ function Sidebar() {
     return (
         <>
             <div className="hidden sm:block">
-                <div className="text-white bg-gradient-to-b from-gray-900 to-gray-800 lg:w-56 md:w-44 w-20 sm:p-4 p-3 border-r border-gray-700 shadow-lg h-full flex flex-col justify-between overflow-y-auto">
+                <div className="text-white bg-gradient-to-b from-gray-900 to-gray-800 lg:w-56 md:w-44 w-20 sm:p-4 p-3 border-r border-gray-700 shadow-lg h-full flex flex-col justify-between">
                     <div className="flex flex-col gap-4 mt-5 flex-1">
                         {sidebarTopItems.map((item) => (
                             <NavLink
