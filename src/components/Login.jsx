@@ -36,86 +36,91 @@ function Login() {
 
     return (
         <>
-            <div className="w-full h-screen text-white flex justify-center items-start sm:mt-8">
-                <div className="flex flex-col space-y-6 justify-center items-center border border-gray-600 p-6 mt-24 rounded-lg shadow-lg bg-gray-800 sm:w-3/4 lg:w-1/3">
-                    <div className="flex items-center gap-2">
-                        <Logo />
-                    </div>
-                    <form
-                        onSubmit={handleSubmit(submit)}
-                        className="space-y-5 w-full sm:w-96 text-sm"
-                    >
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="username"
-                                className="text-sm font-medium mb-2"
-                            >
-                                Username / Email:
-                            </label>
-                            <Input
-                                id="username"
-                                type="text"
-                                placeholder="example@gmail.com"
-                                className="rounded bg-gray-900 text-white p-2 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-                                {...register("username", {
-                                    required: "Username is required",
-                                })}
-                                aria-invalid={errors.username ? "true" : "false"}
-                            />
-                            {errors.username && (
-                                <span
-                                    className="text-sm text-red-500 mt-1"
-                                    role="alert"
-                                >
-                                    {errors.username.message}
-                                </span>
-                            )}
+            <div className="min-h-screen w-full text-white flex justify-center items-center p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+                <div className="w-full max-w-md mx-auto">
+                    <div className="flex flex-col space-y-6 justify-center items-center border border-gray-700/50 p-6 sm:p-8 rounded-xl shadow-2xl bg-gray-800/80 backdrop-blur-sm">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Logo />
                         </div>
-
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="password"
-                                className="text-sm font-medium mb-2"
-                            >
-                                Password:
-                            </label>
-                            <Input
-                                id="password"
-                                type="password"
-                                placeholder="Enter your password"
-                                className="rounded bg-gray-900 text-white p-2 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-                                {...register("password", {
-                                    required: "Password is required",
-                                })}
-                                aria-invalid={errors.password ? "true" : "false"}
-                            />
-                            {errors.password && (
-                                <span
-                                    className="text-sm text-red-500 mt-1"
-                                    role="alert"
-                                >
-                                    {errors.password.message}
-                                </span>
-                            )}
-                        </div>
-
-                        <Button
-                            type="submit"
-                            className="w-full py-3 bg-purple-500 hover:bg-purple-700 text-lg font-medium rounded-lg transition duration-200"
+                        <h1 className="text-2xl font-bold text-center mb-6">Welcome Back</h1>
+                        <form
+                            onSubmit={handleSubmit(submit)}
+                            className="space-y-5 w-full text-sm"
                         >
-                            Login
-                        </Button>
+                            <div className="space-y-2">
+                                <label
+                                    htmlFor="username"
+                                    className="block text-sm font-medium text-gray-300"
+                                >
+                                    Username / Email
+                                </label>
+                                <Input
+                                    id="username"
+                                    type="text"
+                                    placeholder="Enter username or email"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-900/70 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-200 hover:border-gray-500"
+                                    {...register("username", {
+                                        required: "Username or email is required",
+                                    })}
+                                    aria-invalid={errors.username ? "true" : "false"}
+                                />
+                                {errors.username && (
+                                    <span
+                                        className="text-sm text-red-400 mt-1 block"
+                                        role="alert"
+                                    >
+                                        {errors.username.message}
+                                    </span>
+                                )}
+                            </div>
 
-                        <p className="text-center text-sm">
-                            Don&apos;t have an account?{" "}
-                            <Link
-                                to={"/signup"}
-                                className="text-purple-400 font-medium hover:opacity-80 transition duration-200"
+                            <div className="space-y-2">
+                                <label
+                                    htmlFor="password"
+                                    className="block text-sm font-medium text-gray-300"
+                                >
+                                    Password
+                                </label>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-900/70 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 focus:outline-none transition-all duration-200 hover:border-gray-500"
+                                    {...register("password", {
+                                        required: "Password is required",
+                                    })}
+                                    aria-invalid={errors.password ? "true" : "false"}
+                                />
+                                {errors.password && (
+                                    <span
+                                        className="text-sm text-red-400 mt-1 block"
+                                        role="alert"
+                                    >
+                                        {errors.password.message}
+                                    </span>
+                                )}
+                            </div>
+
+                            <Button
+                                type="submit"
+                                className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white text-lg font-semibold rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-800 shadow-lg hover:shadow-purple-500/25 touch-manipulation"
                             >
-                                Sign Up
-                            </Link>
-                        </p>
-                    </form>
+                                Sign In
+                            </Button>
+
+                            <div className="text-center">
+                                <p className="text-sm text-gray-400">
+                                    Don&apos;t have an account?{" "}
+                                    <Link
+                                        to={"/signup"}
+                                        className="text-purple-400 font-medium hover:text-purple-300 transition-colors duration-200 focus:outline-none focus:underline"
+                                    >
+                                        Create Account
+                                    </Link>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 

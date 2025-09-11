@@ -5,75 +5,79 @@ function ChannelNavigate({ username, edit }) {
     if (edit) {
         return (
             <>
-                <section className="text-white text-center w-full flex justify-evenly items-center border-b-2 border-slate-600 text-xs sm:text-base sm:mt-4 md:mt-0 mt-2">
+                <section className="text-white w-full flex justify-center items-center bg-gray-900/50 backdrop-blur-sm border-b border-gray-700 text-sm sm:text-base">
+                <div className="flex gap-1 p-1 bg-gray-800/50 rounded-full">
                     <NavLink
                         to={`/edit/personalInfo`}
                         className={({ isActive }) =>
                             isActive
-                                ? "bg-white text-purple-600 border-b-2 border-purple-600"
-                                : ""
+                                ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full px-6 py-2 font-medium transition-all duration-300"
+                                : "text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-full px-6 py-2 transition-all duration-300"
                         }
                     >
-                        <p className="p-2">Personal Information</p>
+                        Personal Information
                     </NavLink>
                     <NavLink
                         to={`/edit/password`}
                         className={({ isActive }) =>
                             isActive
-                                ? "bg-white text-purple-600 border-b-2 border-purple-600"
-                                : ""
+                                ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full px-6 py-2 font-medium transition-all duration-300"
+                                : "text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-full px-6 py-2 transition-all duration-300"
                         }
                     >
-                        <p className="p-2">Change Password</p>
+                        Change Password
                     </NavLink>
-                </section>
+                </div>
+            </section>
             </>
         );
     }
     return (
         <>
             {/* channel options */}
-            <section className="text-white w-full flex justify-evenly items-center border-b-2 border-slate-600 text-sm sm:text-base sm:mt-4 md:mt-0 mt-2">
-                <NavLink
-                    to={`/channel/${username}/videos`}
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-white text-purple-600 border-b-2 border-purple-600"
-                            : ""
-                    }
-                >
-                    <p className="p-2">Videos</p>
-                </NavLink>
-                <NavLink
-                    to={`/channel/${username}/playlists`}
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-white text-purple-600 border-b-2 border-purple-600"
-                            : ""
-                    }
-                >
-                    <p className="p-2">Playlists</p>
-                </NavLink>
-                <NavLink
-                    to={`/channel/${username}/tweets`}
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-white text-purple-600 border-b-2 border-purple-600"
-                            : ""
-                    }
-                >
-                    <p className="p-2">Tweets</p>
-                </NavLink>
-                <NavLink
-                    to={`/channel/${username}/subscribed`}
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-white text-purple-600 border-b-2 border-purple-600"
-                            : ""
-                    }
-                >
-                    <p className="p-2">Subscribed</p>
-                </NavLink>
+            <section className="text-white w-full flex justify-center items-center bg-gray-900/50 backdrop-blur-sm border-b border-gray-700 text-sm sm:text-base py-2">
+                <div className="flex gap-1 p-1 bg-gray-800/50 rounded-full overflow-x-auto">
+                    <NavLink
+                        to={`/channel/${username}/videos`}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap"
+                                : "text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-full px-4 py-2 transition-all duration-300 whitespace-nowrap"
+                        }
+                    >
+                        Videos
+                    </NavLink>
+                    <NavLink
+                        to={`/channel/${username}/playlists`}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap"
+                                : "text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-full px-4 py-2 transition-all duration-300 whitespace-nowrap"
+                        }
+                    >
+                        Playlists
+                    </NavLink>
+                    <NavLink
+                        to={`/channel/${username}/tweets`}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap"
+                                : "text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-full px-4 py-2 transition-all duration-300 whitespace-nowrap"
+                        }
+                    >
+                        Tweets
+                    </NavLink>
+                    <NavLink
+                        to={`/channel/${username}/subscribed`}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap"
+                                : "text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-full px-4 py-2 transition-all duration-300 whitespace-nowrap"
+                        }
+                    >
+                        Subscribed
+                    </NavLink>
+                </div>
             </section>
         </>
     );

@@ -16,7 +16,7 @@ function HomePage() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        dispatch(getAllVideos({ page: 1, limit: 10 }));
+        dispatch(getAllVideos({ page: 1, limit: 12 }));
 
         return () => dispatch(makeVideosNull());
     }, [dispatch]);
@@ -31,7 +31,7 @@ function HomePage() {
 
     const fetchMoreVideos = useCallback(() => {
         if (hasNextPage) {
-            dispatch(getAllVideos({ page: page + 1, limit: 10 }))
+            dispatch(getAllVideos({ page: page + 1, limit: 12 }))
                 .then(() => {
                     setPage((prev) => prev + 1);
                 })
@@ -42,19 +42,25 @@ function HomePage() {
         }
     }, [page, hasNextPage, dispatch]);
 
+    // Show skeleton during initial loading
+    if (loading && (!videos || videos.length === 0)) {
+        return (
+            <Container>
+                <HomeSkeleton />
+            </Container>
+        );
+    }
+
     return (
         <Container>
             <InfiniteScroll
                 dataLength={videos?.length || 0}
                 next={fetchMoreVideos}
                 hasMore={hasNextPage}
-                loader={isLoading && <HomeSkeleton />}
-                scrollableTarget="scrollable-container"
+                loader={<div className="w-full flex justify-center py-4"><HomeSkeleton /></div>}
+                className="mt-0"
             >
-                <div
-                    className="text-white mb-20 sm:m-0 max-h-screen w-full grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 overflow-y-scroll"
-                    id="scrollable-container"
-                >
+                <div className="text-white w-full grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-6 p-6 bg-gradient-to-br from-gray-900/20 to-purple-900/10">
                     {videos?.map((video) => (
                         <VideoList
                             key={video._id}

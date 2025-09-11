@@ -2,29 +2,75 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
     html {
-        font-family: 'Hedvig Letters Sans', sans-serif;
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: 'Space Grotesk', 'Hedvig Letters Sans', sans-serif;
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        @apply bg-black text-white antialiased;
+    }
+    
+    * {
+        @apply border-gray-700;
     }
 }
 
+@layer components {
+    /* Glassmorphism utility */
+    .glass {
+        @apply bg-white/10 backdrop-blur-md border border-white/20;
+    }
+    
+    .glass-dark {
+        @apply bg-gray-900/80 backdrop-blur-md border border-gray-700/50;
+    }
+    
+    /* Modern button styles */
+    .btn-primary {
+        @apply bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-200;
+    }
+    
+    .btn-secondary {
+        @apply border border-gray-600/50 text-gray-300 hover:bg-gray-700/30 hover:border-gray-500/50 px-6 py-3 rounded-xl transition-all duration-200 font-medium;
+    }
+    
+    /* Input field styles */
+    .input-modern {
+        @apply w-full bg-gray-700/30 border border-gray-600/50 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-200;
+    }
+}
+
+/* Custom scrollbar */
 html {
-    overflow: scroll;
     overflow-x: hidden;
 }
+
 ::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+    width: 8px;
 }
-/* Optional: show position indicator in red */
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-900/50;
+}
+
 ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+    @apply bg-gradient-to-b from-purple-600/80 to-pink-600/80 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply from-purple-500 to-pink-500;
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(147 51 234 / 0.8) rgb(17 24 39 / 0.5);
 }
 
 /* Profile dropdown slide-in animation */

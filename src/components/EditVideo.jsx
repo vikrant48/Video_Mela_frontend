@@ -50,35 +50,45 @@ function EditVideo({
 
     if (uploading) {
         return (
-            <>
-                <div className="w-52 border border-slate-600 bg-black flex gap-2 p-3">
+            <div className="fixed inset-0 flex justify-center items-center bg-black/80 backdrop-blur-sm z-50">
+                <div className="bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md border border-gray-700/50 rounded-2xl shadow-2xl p-8 flex flex-col items-center gap-4 text-white">
                     <Spinner />
-                    <span className="text-md font-bold">Updating video...</span>
+                    <span className="text-lg font-semibold">Updating video...</span>
+                    <p className="text-sm text-gray-400">Please wait while we save your changes</p>
                 </div>
-            </>
+            </div>
         );
     }
 
     return (
-        <>
-            <div className="fixed mt-5 top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-70 z-50">
-                <form
-                    onSubmit={handleSubmit(updateVideo)}
-                    className=" bg-black space-y-2 border h-[30rem] overflow-y-scroll outline-none p-2"
-                >
-                    <div className="sticky left-0 top-0 z-50 bg-[#222222] flex justify-between items-center border-b border-slate-500 px-3 py-1">
+        <div className="fixed inset-0 flex justify-center items-center bg-black/80 backdrop-blur-sm z-50 p-4">
+            <form
+                onSubmit={handleSubmit(updateVideo)}
+                className="relative w-full max-w-5xl h-[85vh] mx-auto text-white border border-gray-700/50 overflow-y-auto bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-md rounded-2xl shadow-2xl"
+            >
+                {/* Header */}
+                <div className="sticky top-0 z-50 bg-gradient-to-r from-gray-900/95 to-gray-800/95 backdrop-blur-md border-b border-gray-700/50 px-6 py-4 rounded-t-2xl">
+                    <div className="flex justify-between items-center">
                         <div>
-                            <h2 className="font-bold">Edit Video</h2>
-                            <p className="text-xs mb-2">
-                                Share where you`ve worked on your profile.
+                            <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center gap-2">
+                                <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                Edit Video
+                            </h2>
+                            <p className="text-sm text-gray-400 mt-1">
+                                Update your video details and thumbnail
                             </p>
                         </div>
-                        <IoCloseCircleOutline
-                            size={23}
+                        <button
+                            type="button"
                             onClick={handleClosePopUp}
-                            className="cursor-pointer"
-                        />
+                            className="p-2 hover:bg-gray-700/50 rounded-full transition-colors duration-200 text-gray-400 hover:text-white"
+                        >
+                            <IoCloseCircleOutline size={28} />
+                        </button>
                     </div>
+                </div>
                     <div className="p-2 grid lg:grid-cols-2 grid-cols-1 gap-5 z-40">
                         <div>
                             <GetImagePreview
@@ -140,9 +150,8 @@ function EditVideo({
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </>
+            </form>
+        </div>
     );
 }
 

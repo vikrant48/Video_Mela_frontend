@@ -39,6 +39,7 @@ import InfiniteScroll from "./InfiniteScroll"
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import RecommendedVideos from "./RecommendedVideos";
 import AddToPlaylistModal from "./AddToPlaylistModal";
+import HomeSkeleton from "../skelton/homeSkelton";
 
 export {
     Button,
@@ -81,5 +82,6 @@ export {
     InfiniteScroll,
     SearchForSmallScreen,
     RecommendedVideos,
-    AddToPlaylistModal
+    AddToPlaylistModal,
+    HomeSkeleton
 };

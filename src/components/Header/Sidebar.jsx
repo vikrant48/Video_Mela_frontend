@@ -1,3 +1,4 @@
+import React from "react";
 import {
     BiHistory,
     BiLike,
@@ -84,53 +85,61 @@ function Sidebar() {
     return (
         <>
             <div className="hidden sm:block">
-                <div className="text-white bg-gradient-to-b from-gray-900 to-gray-800 lg:w-56 md:w-44 w-20 sm:p-4 p-3 border-r border-gray-700 shadow-lg h-full flex flex-col justify-between">
-                    <div className="flex flex-col gap-4 mt-5 flex-1">
+                <div className="text-white bg-gradient-to-b from-gray-900 via-gray-800/95 to-gray-900 lg:w-56 md:w-44 w-16 sm:w-20 sm:p-4 p-2 border-r border-gray-700/50 backdrop-blur-sm shadow-2xl h-full flex flex-col justify-between">
+                    <div className="flex flex-col gap-2 sm:gap-4 mt-3 sm:mt-5 flex-1">
                         {sidebarTopItems.map((item) => (
                             <NavLink
                                 to={item.url}
                                 key={item.title}
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition ${isActive
-                                        ? "bg-purple-500 text-white shadow-md"
-                                        : "hover:bg-gray-700 hover:text-white"
+                                    `flex items-center gap-2 sm:gap-3 justify-center sm:justify-start py-2 sm:py-3 px-2 sm:px-3 rounded-xl transition-all duration-300 touch-manipulation ${isActive
+                                        ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-500/25 scale-105"
+                                        : "hover:bg-gray-700/50 active:bg-gray-600/50 hover:text-white hover:scale-105 hover:shadow-md"
                                     }`
                                 }
-                            >
-                                {item.icon}
-                                <span className="text-sm md:text-base hidden md:block">
+>
+                                <div className="transition-transform duration-300">
+                                    <div className="w-6 h-6 flex items-center justify-center">
+                                        {React.cloneElement(item.icon, { size: 20 })}
+                                    </div>
+                                </div>
+                                <span className="text-xs sm:text-sm md:text-base hidden md:block font-medium">
                                     {item.title}
                                 </span>
                             </NavLink>
                         ))}
                     </div>
 
-                    <div className="flex flex-col gap-2 mt-16 ">
+                    <div className="flex flex-col gap-2 sm:gap-3 mt-8 sm:mt-16">
                         {username && (
-                            <div
-                                className="flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition cursor-pointer border border-gray-600"
+                            <button
+                                className="flex items-center gap-2 sm:gap-3 justify-center sm:justify-start py-2 sm:py-3 px-2 sm:px-3 rounded-xl hover:bg-red-600/20 active:bg-red-600/30 hover:text-red-400 transition-all duration-300 cursor-pointer border border-gray-600/50 hover:border-red-500/50 hover:scale-105 hover:shadow-md touch-manipulation"
                                 onClick={() => logout()}
                             >
-                                <IoMdLogOut size={25} />
-                                <span className="text-sm md:text-base hidden md:block">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                    <IoMdLogOut size={20} />
+                                </div>
+                                <span className="text-xs sm:text-sm md:text-base hidden md:block font-medium">
                                     Logout
                                 </span>
-                            </div>
+                            </button>
                         )}
 
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2">
                             <NavLink
                                 to="/settings/account"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                    `flex items-center gap-2 sm:gap-3 justify-center sm:justify-start py-2 sm:py-3 px-2 sm:px-3 rounded-xl transition-all duration-300 border border-gray-600/50 touch-manipulation ${
                                         isActive
-                                            ? "bg-purple-500 text-white shadow-md"
-                                            : "hover:bg-gray-700 hover:text-white"
+                                            ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/25 border-blue-500/50 scale-105"
+                                            : "hover:bg-gray-700/50 active:bg-gray-600/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
-                                <CiSettings size={25} />
-                                <span className="text-sm md:text-base hidden md:block">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                    <CiSettings size={20} />
+                                </div>
+                                <span className="text-xs sm:text-sm md:text-base hidden md:block font-medium">
                                     Settings
                                 </span>
                             </NavLink>
@@ -138,15 +147,15 @@ function Sidebar() {
                             <NavLink
                                 to="/report-history"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${
                                         isActive
-                                            ? "bg-purple-500 text-white shadow-md"
-                                            : "hover:bg-gray-700 hover:text-white"
+                                            ? "bg-gradient-to-r from-orange-600 to-orange-700 text-white shadow-lg shadow-orange-500/25 border-orange-500/50 scale-105"
+                                            : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
                                 <RiFileHistoryLine size={25} />
-                                <span className="text-sm md:text-base hidden md:block">
+                                <span className="text-sm md:text-base hidden md:block font-medium">
                                     Report History
                                 </span>
                             </NavLink>
@@ -154,15 +163,15 @@ function Sidebar() {
                             <NavLink
                                 to="/help"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${
                                         isActive
-                                            ? "bg-purple-500 text-white shadow-md"
-                                            : "hover:bg-gray-700 hover:text-white"
+                                            ? "bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg shadow-green-500/25 border-green-500/50 scale-105"
+                                            : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
                                 <AiOutlineQuestionCircle size={25} />
-                                <span className="text-sm md:text-base hidden md:block">
+                                <span className="text-sm md:text-base hidden md:block font-medium">
                                     Help
                                 </span>
                             </NavLink>
@@ -170,15 +179,15 @@ function Sidebar() {
                             <NavLink
                                 to="/feedback"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-2 px-3 rounded-lg transition border border-gray-600 ${
+                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${
                                         isActive
-                                            ? "bg-purple-500 text-white shadow-md"
-                                            : "hover:bg-gray-700 hover:text-white"
+                                            ? "bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-lg shadow-teal-500/25 border-teal-500/50 scale-105"
+                                            : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
                                 <MdFeedback size={25} />
-                                <span className="text-sm md:text-base hidden md:block">
+                                <span className="text-sm md:text-base hidden md:block font-medium">
                                     Send Feedback
                                 </span>
                             </NavLink>
@@ -191,20 +200,24 @@ function Sidebar() {
                 </div>
             </div>
 
-            <div className="fixed bottom-0 z-20 w-full border-t-2 border-gray-700 bg-gradient-to-r from-gray-900 to-gray-800 text-white h-16 flex justify-around items-center shadow-lg sm:hidden">
+            {/* Mobile Bottom Bar */}
+            <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 via-gray-800/95 to-gray-900 border-t border-gray-700/50 backdrop-blur-md p-2 sm:p-3 flex justify-around items-center md:hidden z-50 shadow-2xl">
                 {bottomBarItems.map((item) => (
                     <NavLink
-                        to={item.url}
                         key={item.title}
+                        to={item.url}
                         className={({ isActive }) =>
-                            `flex flex-col items-center gap-1 transition ${isActive
-                                ? "text-purple-500 font-semibold"
-                                : "hover:text-purple-400"
+                            `flex flex-col items-center p-2 rounded-xl transition-all duration-300 touch-manipulation min-w-0 flex-1 max-w-20 ${
+                                isActive
+                                    ? "text-purple-400 bg-gradient-to-t from-purple-600/20 to-purple-500/10 shadow-lg shadow-purple-500/25 scale-110 border border-purple-500/30"
+                                    : "text-gray-400 hover:text-white active:text-purple-300 hover:bg-gray-700/30 active:bg-gray-600/30 hover:scale-105"
                             }`
                         }
                     >
-                        {item.icon}
-                        <span className="text-xs">{item.title}</span>
+                        <div className="transition-transform duration-300 mb-1">
+                            {React.cloneElement(item.icon, { size: 20 })}
+                        </div>
+                        <span className="text-xs font-medium truncate w-full text-center leading-tight">{item.title}</span>
                     </NavLink>
                 ))}
             </div>

@@ -117,30 +117,32 @@ function AdminDashboard() {
                 </div>
             </Container> */}
             <Navbar />
-            <div className="flex h-screen overflow-hidden">
-
-                <Sidebar className="w-1/4 bg-gray-800 h-full" />
-
-                <div className="w-full bg-gray-900 overflow-y-auto">
-                    <Container>
-                        <div className=" w-full relative h-screen text-white space-y-5 z-10 py-4 px-1">
+            <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+                <Sidebar className="hidden sm:block flex-shrink-0" />
+                
+                <main className="flex-1 overflow-y-auto">
+                    <div className="min-h-screen bg-gray-900/50 backdrop-blur-sm">
+                        <Container>
+                            <div className="w-full relative text-white space-y-6 sm:space-y-8 py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
                             {popUp.uploadVideo && (
                                 <UploadVideo setUploadVideoPopup={setPopUp} />
                             )}
 
                             {popUp.editVideo && (
-                                <div className="w-full flex justify-center top-24 fixed z-20">
-                                    <EditVideo
-                                        setEditVideoPopup={setPopUp}
-                                        title={videoDetails?.title}
-                                        description={videoDetails?.description}
-                                        videoId={videoDetails?._id}
-                                    />
+                                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                                    <div className="w-full max-w-2xl">
+                                        <EditVideo
+                                            setEditVideoPopup={setPopUp}
+                                            title={videoDetails?.title}
+                                            description={videoDetails?.description}
+                                            videoId={videoDetails?._id}
+                                        />
+                                    </div>
                                 </div>
                             )}
 
                             {popUp.deleteVideo && (
-                                <div className="w-full fixed top-52 flex justify-center z-20">
+                                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
                                     <DeleteConfirmation
                                         video={true}
                                         onCancel={() =>
@@ -155,10 +157,10 @@ function AdminDashboard() {
                             )}
 
                             {deleting && (
-                                <div className="w-full fixed top-20 flex justify-center z-20">
-                                    <div className="w-52 border border-slate-600 bg-black flex gap-2 p-3">
+                                <div className="fixed top-4 right-4 z-50">
+                                    <div className="bg-gray-800/95 backdrop-blur-sm border border-gray-700/50 rounded-lg shadow-xl p-4 flex items-center gap-3 min-w-64">
                                         <Spinner />
-                                        <span className="text-md font-bold">
+                                        <span className="text-sm font-medium text-white">
                                             Deleting video...
                                         </span>
                                     </div>
@@ -177,9 +179,10 @@ function AdminDashboard() {
                                 setPopUp={setPopUp}
                                 setVideoDetails={setVideoDetails}
                             />
-                        </div>
-                    </Container>
-                </div>
+                            </div>
+                        </Container>
+                    </div>
+                </main>
             </div>
         </>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Search, Button, Logo, SearchForSmallScreen } from "../index.js";
 import { Link } from "react-router-dom";
 import {
@@ -50,8 +50,8 @@ function Navbar() {
 
     return (
         <>
-            <nav className="w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 flex justify-between items-center p-4 sm:gap-6 gap-3 border-b border-gray-700 sticky top-0 z-50 shadow-lg">
-                <div className="flex items-center gap-3 cursor-pointer">
+            <nav className="w-full bg-gradient-to-r from-gray-900 via-gray-800/90 to-gray-900 backdrop-blur-sm flex justify-between items-center p-1.5 sm:p-1.5 sm:gap-6 gap-2 border-b border-gray-700/50 sticky top-0 z-50 shadow-xl">
+                <div className="flex items-center gap-2 sm:gap-3 cursor-pointer">
                     <Logo />
                 </div>
 
@@ -60,11 +60,15 @@ function Navbar() {
                 </div>
 
                 <div className="text-white flex justify-end sm:hidden">
-                    <CiSearch
-                        size={28}
-                        className="hover:text-purple-400 transition"
+                    <button
+                        className="p-2 rounded-full hover:bg-gray-700 active:bg-gray-600 transition-colors touch-manipulation"
                         onClick={() => setOpenSearch((prev) => !prev)}
-                    />
+                    >
+                        <CiSearch
+                            size={24}
+                            className="hover:text-purple-400 transition"
+                        />
+                    </button>
                     {openSearch && (
                         <SearchForSmallScreen
                             open={openSearch}
@@ -74,27 +78,27 @@ function Navbar() {
                 </div>
 
                 {authStatus ? (
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 sm:gap-4">
                         {/* Upload Video Button */}
                         <Link 
                             to="/upload"
-                            className="hidden sm:flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+                            className="hidden sm:flex items-center gap-2 bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 hover:scale-105"
                         >
                             <MdVideoCall size={20} />
                             <span>Upload</span>
                         </Link>
                         
                         <div className="relative">
-                            <div 
-                                className="rounded-full cursor-pointer hover:ring-2 hover:ring-purple-500 transition-all"
+                            <button 
+                                className="rounded-full cursor-pointer hover:ring-2 hover:ring-purple-500 active:ring-purple-600 transition-all duration-200 p-1 touch-manipulation"
                                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
                             >
                                 <img
                                     src={profileImg}
                                     alt="profile"
-                                    className="rounded-full w-10 h-10 object-cover border border-gray-600 shadow-md"
+                                    className="rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover border border-gray-600 shadow-md"
                                 />
-                            </div>
+                            </button>
                         
                         {/* Profile Dropdown */}
                         {showProfileDropdown && (
@@ -106,18 +110,18 @@ function Navbar() {
                                 ></div>
                                 
                                 {/* Dropdown Panel */}
-                                <div className="fixed right-4 top-16 z-50 w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 border border-gray-700 rounded-lg shadow-2xl transform transition-all duration-300 ease-out animate-slide-in-right">
+                                <div className="fixed right-2 sm:right-4 top-14 sm:top-16 z-50 w-72 sm:w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 border border-gray-700/50 rounded-lg shadow-2xl backdrop-blur-sm transform transition-all duration-300 ease-out animate-slide-in-right">
                                     {/* Header */}
-                                    <div className="p-4 border-b border-gray-700">
+                                    <div className="p-3 sm:p-4 border-b border-gray-700/50">
                                         <div className="flex items-center gap-3">
                                             <img
                                                 src={profileImg}
                                                 alt="profile"
-                                                className="rounded-full w-12 h-12 object-cover border border-gray-600"
+                                                className="rounded-full w-10 h-10 sm:w-12 sm:h-12 object-cover border border-gray-600 shadow-md"
                                             />
                                             <div>
-                                                <h3 className="text-white font-semibold text-lg">{username}</h3>
-                                                <p className="text-gray-400 text-sm">Manage your account</p>
+                                                <h3 className="text-white font-semibold text-base sm:text-lg">{username}</h3>
+                                                <p className="text-gray-400 text-xs sm:text-sm">Manage your account</p>
                                             </div>
                                         </div>
                                     </div>
@@ -126,11 +130,11 @@ function Navbar() {
                                     <div className="p-2">
                                         <Link 
                                             to="/settings/account"
-                                            className="flex items-center gap-3 px-4 py-3 text-white hover:bg-gray-700 rounded-lg transition-colors"
+                                            className="flex items-center gap-3 px-3 sm:px-4 py-3 text-white hover:bg-gray-700 active:bg-gray-600 rounded-lg transition-colors touch-manipulation"
                                             onClick={() => setShowProfileDropdown(false)}
                                         >
                                             <CiUser size={20} />
-                                            <span>Edit Profile</span>
+                                            <span className="text-sm sm:text-base">Edit Profile</span>
                                         </Link>
                                         
                                         <div className="flex items-center gap-3 px-4 py-3 text-gray-400 cursor-not-allowed rounded-lg">
@@ -167,14 +171,14 @@ function Navbar() {
                         </div>
                     </div>
                 ) : (
-                    <div className="hidden sm:flex gap-3">
+                    <div className="hidden sm:flex gap-2 sm:gap-3">
                         <Link to="/login">
-                            <Button className="bg-gray-800 border border-gray-700 hover:bg-purple-600 hover:text-white px-4 py-2 transition rounded-3xl">
+                            <Button className="bg-gray-800 border border-gray-700 hover:bg-purple-600 active:bg-purple-700 hover:text-white px-3 sm:px-4 py-2 transition-all duration-200 rounded-3xl text-sm sm:text-base hover:scale-105 shadow-lg">
                                 Login
                             </Button>
                         </Link>
                         <Link to="/signup">
-                            <Button className="bg-transparent border border-gray-700 hover:bg-purple-600 hover:text-white px-4 py-2 transition rounded-3xl">
+                            <Button className="bg-transparent border border-gray-700 hover:bg-purple-600 active:bg-purple-700 hover:text-white px-3 sm:px-4 py-2 transition-all duration-200 rounded-3xl text-sm sm:text-base hover:scale-105 shadow-lg">
                                 Sign Up
                             </Button>
                         </Link>
@@ -182,11 +186,15 @@ function Navbar() {
                 )}
 
                 <div className="sm:hidden block">
-                    <SlMenu
-                        size={26}
-                        className="text-white hover:text-purple-400 transition"
+                    <button
+                        className="p-2 rounded-full hover:bg-gray-700 active:bg-gray-600 transition-colors touch-manipulation"
                         onClick={() => setToggleMenu((prev) => !prev)}
-                    />
+                    >
+                        <SlMenu
+                            size={22}
+                            className="text-white hover:text-purple-400 transition"
+                        />
+                    </button>
                 </div>
 
                 {toggleMenu && (

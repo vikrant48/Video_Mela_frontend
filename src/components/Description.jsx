@@ -72,81 +72,91 @@ function Description({
     };
     return (
         <>
-            <section className="sm:max-w-4xl w-full text-white sm:p-5 p-2 space-y-2">
-                <div className="border-b border-slate-700">
-                    <div className="space-y-2 mb-2">
-                        <h1 className="sm:text-2xl font-semibold">{title}</h1>
-                        <div className="flex items-center justify-between sm:justify-start sm:gap-5">
-                            <div>
-                                <span className="text-sm text-slate-400">
-                                    {views} views .{" "}
-                                </span>
-                                <span className="text-sm text-slate-400">
-                                    {createdAt ? timeAgo(createdAt) : 'Unknown date'}
-                                </span>
+            <section className="w-full text-white bg-gray-900/50 rounded-xl border border-gray-800 p-4 md:p-6 space-y-4">
+                <div className="border-b border-gray-700 pb-4">
+                    <div className="space-y-4">
+                        <h1 className="text-lg md:text-xl lg:text-2xl font-semibold leading-tight">{title}</h1>
+                        
+                        {/* Views and Date */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div className="flex items-center gap-2 text-sm text-gray-400">
+                                <span className="text-purple-400 font-medium">{views}</span>
+                                <span>views</span>
+                                <span>•</span>
+                                <span>{createdAt ? timeAgo(createdAt) : 'Unknown date'}</span>
                             </div>
-                            <div className="flex gap-2">
-                                <div className="rounded-full w-24 flex justify-center bg-[#222222] py-1">
+                            
+                            {/* Action Buttons */}
+                            <div className="flex flex-wrap gap-2">
+                                <div className="bg-gray-800 hover:bg-gray-700 rounded-full px-4 py-2 transition-all duration-200">
                                     <Like
                                         isLiked={isLiked}
                                         videoId={videoId}
                                         likesCount={likesCount}
-                                        size={25}
+                                        size={20}
                                     />
                                 </div>
                                 <button
                                     onClick={() => setShowPlaylistModal(true)}
-                                    className="flex items-center gap-2 bg-[#222222] hover:bg-[#333333] px-3 py-1 rounded-full text-white transition-colors"
+                                    className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 hover:scale-105 px-4 py-2 rounded-full text-white transition-all duration-200"
                                     title="Add to playlist"
                                 >
-                                    <MdPlaylistAdd size={20} />
-                                    <span className="text-sm">Save</span>
+                                    <MdPlaylistAdd size={18} />
+                                    <span className="text-sm font-medium hidden xs:inline">Save</span>
                                 </button>
                                 <button
                                     onClick={handleDownload}
-                                    className="flex items-center gap-2 bg-[#222222] hover:bg-[#333333] px-3 py-1 rounded-full text-white transition-colors"
+                                    className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 hover:scale-105 px-4 py-2 rounded-full text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                                     title="Download video"
                                     disabled={!videoFile}
                                 >
-                                    <MdDownload size={20} />
-                                    <span className="text-sm">Download</span>
+                                    <MdDownload size={18} />
+                                    <span className="text-sm font-medium hidden xs:inline">Download</span>
                                 </button>
                             </div>
                         </div>
-                        <div className="flex gap-2 justify-between items-center">
+                        
+                        {/* Channel Info and Subscribe */}
+                        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
                             <Link
                                 to={`/channel/${channelName}/videos`}
-                                className="flex gap-2"
+                                className="flex items-center gap-3 hover:bg-gray-800/50 rounded-lg p-2 -m-2 transition-colors group"
                             >
                                 <img
                                     src={avatar}
-                                    className="w-10 h-10 rounded-full object-cover"
+                                    className="w-12 h-12 rounded-full object-cover ring-2 ring-gray-700 group-hover:ring-purple-500 transition-all"
+                                    alt={channelName}
                                 />
                                 <div>
-                                    <h1 className="font-semibold">
+                                    <h2 className="font-semibold text-white group-hover:text-purple-300 transition-colors">
                                         {channelName}
-                                    </h1>
-                                    <p className="text-xs text-slate-400">
-                                        {localSubscribersCount} Subscribers
+                                    </h2>
+                                    <p className="text-sm text-gray-400">
+                                        <span className="text-purple-400 font-medium">{localSubscribersCount}</span> Subscribers
                                     </p>
                                 </div>
                             </Link>
-                            <div onClick={handleSubsribe}>
-                                <Button
-                                    onClick={handleSubscribe}
-                                    className="border-slate-500 hover:scale-110 transition-all text-black font-bold px-4 py-1 bg-purple-500"
-                                >
-                                    {localIsSubscribed
-                                        ? "Subscribed"
-                                        : "Subscribe"}
-                                </Button>
-                            </div>
+                            
+                            <Button
+                                onClick={handleSubscribe}
+                                className={`px-6 py-2 rounded-full font-semibold transition-all duration-200 hover:scale-105 ${
+                                    localIsSubscribed 
+                                        ? 'bg-gray-700 hover:bg-gray-600 text-white border border-gray-600' 
+                                        : 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-lg'
+                                }`}
+                            >
+                                {localIsSubscribed ? "Subscribed" : "Subscribe"}
+                            </Button>
                         </div>
                     </div>
                 </div>
-                <p className="text-xs bg-[#222222] rounded-lg p-2 outline-none">
-                    {description}
-                </p>
+                
+                {/* Description */}
+                <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+                    <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
+                        {description || 'No description available.'}
+                    </p>
+                </div>
             </section>
             
             {/* Add to Playlist Modal */}

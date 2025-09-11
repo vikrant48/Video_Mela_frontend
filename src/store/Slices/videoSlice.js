@@ -16,7 +16,7 @@ const initialState = {
 
 export const getAllVideos = createAsyncThunk(
     "getAllVideos",
-    async ({ userId, sortBy = "createdAt", sortType = "asc", query = "", page = 1, limit = 10 }) => {
+    async ({ userId, sortBy = "createdAt", sortType = "asc", query = "", page = 1, limit = 500 }) => {
         try {
             const params = new URLSearchParams()
 

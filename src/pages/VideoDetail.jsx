@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getVideoById } from "../store/Slices/videoSlice";
@@ -46,9 +46,10 @@ function VideoDetail() {
     return (
         <>
             <Navbar />
-            <div className="flex flex-col lg:flex-row gap-6 p-4 max-w-7xl mx-auto">
-                {/* Main Video Content */}
-                <div className="flex-1 lg:max-w-4xl">
+            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800/50 to-gray-900">
+                <div className="flex flex-col xl:flex-row gap-3 sm:gap-4 lg:gap-6 p-3 sm:p-4 lg:p-6 max-w-[1400px] mx-auto">
+                    {/* Main Video Content */}
+                    <div className="flex-1 xl:max-w-4xl space-y-3 sm:space-y-4 lg:space-y-6">
                     <Video
                         src={video?.videoFile?.url}
                         poster={video?.thumbnail?.url}
@@ -69,44 +70,56 @@ function VideoDetail() {
                         channelId={video?.owner?._id}
                         videoFile={video?.videoFile?.url}
                     />
-                    <div className="text-white font-semibold sm:px-5 px-3 mt-6">
-                        {totalComments} Comments
-                    </div>
-                    <TweetAndComment
-                        comment={true}
-                        videoId={video?._id}
-                    />
-                    <InfiniteScroll
-                        fetchMore={fetchMoreComments}
-                        hasNextPage={hasNextPage}
-                    >
-                        <div className="w-full">
-                            {comments?.map((comment) => (
-                                <CommentList
-                                    key={comment?._id}
-                                    avatar={comment?.owner?.avatar?.url}
-                                    commentId={comment?._id}
-                                    content={comment?.content}
-                                    createdAt={comment?.createdAt}
-                                    fullName={comment?.owner?.fullName}
-                                    isLiked={comment?.isLiked}
-                                    likesCount={comment?.likesCount}
-                                    username={comment?.owner?.username}
-                                />
-                            ))}
-                            {loading && (
-                                <div className="w-full flex justify-center items-center">
-                                    <Spinner width={10} />
+                        {/* Comments Section */}
+                        <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 p-3 sm:p-4 lg:p-6 shadow-lg">
+                            <div className="text-white font-semibold text-base sm:text-lg mb-3 sm:mb-4 flex items-center gap-2">
+                                <span className="text-purple-400 font-bold">{totalComments}</span>
+                                <span>Comments</span>
+                            </div>
+                            
+                            <TweetAndComment
+                                comment={true}
+                                videoId={video?._id}
+                            />
+                            
+                            <InfiniteScroll
+                                fetchMore={fetchMoreComments}
+                                hasNextPage={hasNextPage}
+                            >
+                                <div className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
+                                    {comments?.map((comment) => (
+                                        <CommentList
+                                            key={comment?._id}
+                                            avatar={comment?.owner?.avatar?.url}
+                                            commentId={comment?._id}
+                                            content={comment?.content}
+                                            createdAt={comment?.createdAt}
+                                            fullName={comment?.owner?.fullName}
+                                            isLiked={comment?.isLiked}
+                                            likesCount={comment?.likesCount}
+                                            username={comment?.owner?.username}
+                                        />
+                                    ))}
+                                    {loading && (
+                                        <div className="w-full flex justify-center items-center py-6 sm:py-8">
+                                            <Spinner width={10} />
+                                        </div>
+                                    )}
                                 </div>
-                            )}
+                            </InfiniteScroll>
                         </div>
-                    </InfiniteScroll>
-                </div>
-                
-                {/* Recommended Videos Sidebar */}
-                <div className="lg:w-96 lg:flex-shrink-0">
-                    <div className="sticky top-4">
-                        <RecommendedVideos currentVideoId={videoId} />
+                    </div>
+                    
+                    {/* Recommended Videos Sidebar */}
+                    <div className="xl:w-96 xl:flex-shrink-0">
+                        <div className="sticky top-16 sm:top-20">
+                            <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 p-3 sm:p-4 shadow-lg">
+                                <h3 className="text-white font-semibold text-base sm:text-lg mb-3 sm:mb-4 flex items-center gap-2">
+                                    <span>Recommended Videos</span>
+                                </h3>
+                                <RecommendedVideos currentVideoId={videoId} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
