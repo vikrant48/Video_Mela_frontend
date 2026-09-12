@@ -9,12 +9,19 @@ function AuthLayout({ children, authentication }) {
 
     useEffect(() => {
         if (!authentication && authStatus !== authentication) {
-            return
+            return;
         }
     }, [authStatus, authentication, navigate]);
 
     if (authentication && authStatus !== authentication) {
-        return <LoginPopup />;
+        return (
+            <div className="relative min-h-screen">
+                <div className="pointer-events-none select-none opacity-30 blur-[2px] filter">
+                    {children}
+                </div>
+                <LoginPopup onClose={() => navigate("/")} />
+            </div>
+        );
     }
 
     return children;
