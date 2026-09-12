@@ -10,22 +10,22 @@ const initialState = {
 
 export const createAccount = createAsyncThunk("register", async (data) => {
     const formData = new FormData();
-    
+
     // Add avatar file
     if (data.avatar && data.avatar[0]) {
         formData.append("avatar", data.avatar[0]);
     }
-    
+
     formData.append("username", data.username);
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("fullName", data.fullName);
-    
+
     // Add cover image if provided
     if (data.coverImage && data.coverImage[0]) {
         formData.append("coverImage", data.coverImage[0]);
-    } 
-    
+    }
+
     // Log FormData contents
     console.log("📦 FormData contents:");
     for (let [key, value] of formData.entries()) {
@@ -38,7 +38,8 @@ export const createAccount = createAsyncThunk("register", async (data) => {
         toast.success("Registered successfully!!!");
         return response.data;
     } catch (error) {
-        toast.error(error?.response?.data?.error);
+        const errorMsg = error?.response?.data?.message || error?.response?.data?.error || error?.message || "Registration failed";
+        toast.error(errorMsg);
         throw error;
     }
 });

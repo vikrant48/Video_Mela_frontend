@@ -18,7 +18,9 @@ export const toggleSubscription = createAsyncThunk(
             );
             return response.data.data.subscribed;
         } catch (error) {
-            toast.error(error?.response?.data?.error);
+            if (error?.response?.status !== 401) {
+                toast.error(error?.response?.data?.error || error?.response?.data?.message);
+            }
             throw error;
         }
     }
@@ -33,7 +35,9 @@ export const getUserChannelSubscribers = createAsyncThunk(
             );
             return response.data.data;
         } catch (error) {
-            toast.error(error?.response?.data?.error);
+            if (error?.response?.status !== 401) {
+                toast.error(error?.response?.data?.error || error?.response?.data?.message);
+            }
             throw error;
         }
     }

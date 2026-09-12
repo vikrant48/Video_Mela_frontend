@@ -15,7 +15,9 @@ export const getChannelStats = createAsyncThunk(
             const response = await axiosInstance.get('/dashboard/stats');
             return response.data.data;
         } catch (error) {
-            toast.error(error?.response?.data?.error);
+            if (error?.response?.status !== 401) {
+                toast.error(error?.response?.data?.error || error?.response?.data?.message);
+            }
             throw error;
         }
     }
@@ -28,7 +30,9 @@ export const getChannelVideos = createAsyncThunk(
             const response = await axiosInstance.get('/dashboard/videos');
             return response.data.data;
         } catch (error) {
-            toast.error(error?.response?.data?.error);
+            if (error?.response?.status !== 401) {
+                toast.error(error?.response?.data?.error || error?.response?.data?.message);
+            }
             throw error;
         }
     }
@@ -53,7 +57,7 @@ const dashboardSlice = createSlice({
             state.loading = false;
             state.channelVideos = action.payload;
         });
-        
+
     },
 });
 

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginSkeleton from "../skelton/loginskelton.jsx";
 import GetImagePreview from "./GetImagePreview.jsx";
+import { IoClose } from "react-icons/io5";
 
 function SignUp() {
     const {
@@ -42,7 +43,16 @@ function SignUp() {
     return (
         <>
             <div className="w-full h-screen text-white p-3 flex justify-center items-start sm:mt-8">
-                <div className="flex flex-col space-y-4 justify-center items-center border border-slate-600 p-5 rounded-lg shadow-lg bg-gray-800 sm:w-3/4 lg:w-1/2">
+                <div className="relative flex flex-col space-y-4 justify-center items-center border border-slate-600 p-5 rounded-lg shadow-lg bg-gray-800 sm:w-3/4 lg:w-1/2">
+                    {/* Close Icon */}
+                    <button
+                        onClick={() => navigate("/")}
+                        className="absolute top-4 right-4 text-gray-400 hover:text-white p-1.5 rounded-full hover:bg-gray-700/50 transition duration-200"
+                        aria-label="Close signup page"
+                    >
+                        <IoClose size={24} />
+                    </button>
+
                     {/* Logo Section */}
                     <div className="flex items-center gap-2">
                         <Logo />

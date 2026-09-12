@@ -1,4 +1,3 @@
-import React from "react";
 import { Logo, Button, Input } from "./index";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +5,7 @@ import { getCurrentUser, userLogin } from "../store/Slices/authSlice.js";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginSkeleton from "../skelton/loginskelton.jsx";
+import { IoClose } from "react-icons/io5";
 
 function Login() {
     const {
@@ -38,7 +38,16 @@ function Login() {
         <>
             <div className="min-h-screen w-full text-white flex justify-center items-center p-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
                 <div className="w-full max-w-md mx-auto">
-                    <div className="flex flex-col space-y-6 justify-center items-center border border-gray-700/50 p-6 sm:p-8 rounded-xl shadow-2xl bg-gray-800/80 backdrop-blur-sm">
+                    <div className="relative flex flex-col space-y-6 justify-center items-center border border-gray-700/50 p-6 sm:p-8 rounded-xl shadow-2xl bg-gray-800/80 backdrop-blur-sm">
+                        {/* Close Icon */}
+                        <button
+                            onClick={() => navigate("/")}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-white p-1.5 rounded-full hover:bg-gray-700/50 transition duration-200"
+                            aria-label="Close login page"
+                        >
+                            <IoClose size={24} />
+                        </button>
+
                         <div className="flex items-center gap-2 mb-2">
                             <Logo />
                         </div>
