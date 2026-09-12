@@ -83,11 +83,14 @@ function Navbar() {
                 <div className="relative flex items-center">
                     <button
                         onClick={() => setShowGithubDropdown(!showGithubDropdown)}
-                        className="flex items-center gap-1.5 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white px-2.5 py-1.5 rounded-lg border border-gray-700 transition duration-200 shadow-md text-xs sm:text-sm font-medium"
+                        className="relative flex items-center gap-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full transition-all duration-300 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-105 font-semibold text-xs sm:text-sm ring-2 ring-purple-400/40"
                         title="GitHub Repositories"
                     >
-                        <FaGithub size={18} />
-                        <span className="hidden md:inline">GitHub</span>
+                        <FaGithub size={18} className="text-white" />
+                        <span className="font-bold tracking-wide">GitHub</span>
+                        <span className="hidden sm:inline-block bg-white/20 text-white text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded-full">
+                            Repos
+                        </span>
                     </button>
 
                     {showGithubDropdown && (
@@ -96,33 +99,40 @@ function Navbar() {
                                 className="fixed inset-0 z-40"
                                 onClick={() => setShowGithubDropdown(false)}
                             ></div>
-                            <div className="absolute right-0 top-10 z-50 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-xl p-2 flex flex-col gap-1 text-sm">
-                                <div className="px-3 py-1.5 text-xs text-gray-400 font-semibold border-b border-gray-700">
-                                    Source Code Repositories
+                            <div className="absolute right-0 top-12 z-50 w-64 bg-slate-900 border border-purple-500/40 rounded-xl shadow-2xl p-2.5 flex flex-col gap-1.5 text-sm backdrop-blur-md">
+                                <div className="px-3 py-1.5 text-xs text-purple-300 font-bold border-b border-gray-700/80 flex justify-between items-center">
+                                    <span>PROJECT REPOSITORIES</span>
+                                    <span className="text-[10px] bg-purple-900/60 text-purple-200 px-1.5 py-0.5 rounded border border-purple-500/30">Code Links</span>
                                 </div>
                                 <a
                                     href="https://github.com/vikrant48/Video_Mela_frontend"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center justify-between px-3 py-2 text-gray-200 hover:bg-purple-600/30 hover:text-white rounded-md transition"
+                                    className="flex items-center justify-between px-3 py-2 text-gray-100 hover:bg-purple-600/30 hover:text-white rounded-lg transition border border-transparent hover:border-purple-500/40"
                                     onClick={() => setShowGithubDropdown(false)}
                                 >
-                                    <span className="flex items-center gap-2">
-                                        <FaGithub size={16} /> Frontend Repo
-                                    </span>
-                                    <FaExternalLinkAlt size={12} className="text-gray-400" />
+                                    <div className="flex flex-col">
+                                        <span className="flex items-center gap-2 font-semibold text-sm">
+                                            <FaGithub size={16} className="text-purple-400" /> Frontend Code
+                                        </span>
+                                        <span className="text-[11px] text-gray-400 pl-6">React 18 + Redux Toolkit</span>
+                                    </div>
+                                    <FaExternalLinkAlt size={12} className="text-purple-400" />
                                 </a>
                                 <a
                                     href="https://github.com/vikrant48/Video_Mela_backend"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center justify-between px-3 py-2 text-gray-200 hover:bg-purple-600/30 hover:text-white rounded-md transition"
+                                    className="flex items-center justify-between px-3 py-2 text-gray-100 hover:bg-purple-600/30 hover:text-white rounded-lg transition border border-transparent hover:border-purple-500/40"
                                     onClick={() => setShowGithubDropdown(false)}
                                 >
-                                    <span className="flex items-center gap-2">
-                                        <FaGithub size={16} /> Backend Repo
-                                    </span>
-                                    <FaExternalLinkAlt size={12} className="text-gray-400" />
+                                    <div className="flex flex-col">
+                                        <span className="flex items-center gap-2 font-semibold text-sm">
+                                            <FaGithub size={16} className="text-indigo-400" /> Backend Code
+                                        </span>
+                                        <span className="text-[11px] text-gray-400 pl-6">Node + Express + MongoDB</span>
+                                    </div>
+                                    <FaExternalLinkAlt size={12} className="text-indigo-400" />
                                 </a>
                             </div>
                         </>

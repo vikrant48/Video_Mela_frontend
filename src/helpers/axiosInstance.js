@@ -11,13 +11,21 @@ const startColdStartTimer = () => {
   pendingRequestsCount++;
   if (!coldStartTimer && !coldStartToastId) {
     coldStartTimer = setTimeout(() => {
-      if (pendingRequestsCount > 0) {
+      if (pendingRequestsCount > 0 && !coldStartToastId) {
         coldStartToastId = toast.loading(
           "Backend is connecting... Please be patient while the server wakes up",
-          { id: "render-cold-start-toast" }
+          {
+            id: "render-cold-start-toast",
+            duration: Infinity,
+            style: {
+              background: "#1e293b",
+              color: "#ffffff",
+              border: "1px solid #6366f1"
+            }
+          }
         );
       }
-    }, 2500);
+    }, 1500); // 1.5 seconds threshold
   }
 };
 
@@ -30,6 +38,7 @@ const clearColdStartTimer = () => {
     }
     if (coldStartToastId) {
       toast.dismiss("render-cold-start-toast");
+      toast.success("Backend connected!", { duration: 3000, id: "backend-connected-success" });
       coldStartToastId = null;
     }
   }
