@@ -1,31 +1,81 @@
-# Video Mela - Frontend
+# Video Mela - Frontend Web Application
 
-## Overview
-The frontend of Video Mela is a user-friendly video-sharing platform built using modern web technologies. It provides seamless video browsing, uploads, real-time comments, infinite scrolling, and more.
+[![Frontend Repository](https://img.shields.io/badge/GitHub-Frontend_Repo-61DAFB?style=for-the-badge&logo=react)](https://github.com/vikrant48/Video_Mela_frontend)
+[![Backend Repository](https://img.shields.io/badge/GitHub-Backend_Repo-181717?style=for-the-badge&logo=github)](https://github.com/vikrant48/Video_Mela_backend)
 
----
-- [Model link](https://app.eraser.io/workspace/OO3HFmjKmUYmLl8JiwRk?origin=share)
-- [Backend Link](https://github.com/vikrant48/Video_Mela_backend)
-
-
-## Features
-- **User Authentication**: Secure login and registration using JWT.
-- **Video Upload**: Upload videos with a thumbnail preview.
-- **Infinite Scrolling**: Load videos dynamically as users scroll.
-- **Search and Filters**: Search videos and sort by date or other criteria.
-- **Responsive Design**: Fully responsive UI for mobile, tablet, and desktop.
-- **Comments System**: Real-time commenting on videos.
-- **Dynamic Video Details**: Display video information, likes, views, and description.
+A modern, highly responsive Single-Page Application (SPA) for **Video Mela**—a full-featured video streaming platform built with React 18, Vite, Redux Toolkit, React Hook Form, and Tailwind CSS.
 
 ---
 
-## Technologies Used
-- **React**: For building dynamic user interfaces.
-- **Redux Toolkit**: State management for efficient data handling.
-- **React Router DOM**: For single-page application (SPA) routing.
-- **Tailwind CSS**: For responsive and modern UI styling.
-- **Axios**: For API communication with the backend.
-- **React-Hot-Toast**: For interactive notifications.
+## 🔗 Quick Links
+- **Frontend GitHub Repo**: [https://github.com/vikrant48/Video_Mela_frontend](https://github.com/vikrant48/Video_Mela_frontend)
+- **Backend GitHub Repo**: [https://github.com/vikrant48/Video_Mela_backend](https://github.com/vikrant48/Video_Mela_backend)
+- **Data Model Workspace**: [Eraser.io Design Workspace](https://app.eraser.io/workspace/OO3HFmjKmUYmLl8JiwRk?origin=share)
 
 ---
+
+
+
+## 🛠️ Technology Stack
+
+- **Framework & Runtime**: React 18 & Vite
+- **State Management**: Redux Toolkit & React-Redux
+- **Routing**: React Router DOM v6
+- **Styling**: Tailwind CSS & Vanilla CSS
+- **Form Handling**: React Hook Form
+- **HTTP Client**: Axios with custom interceptors
+- **Icons & UI Utilities**: React Icons (`react-icons/io5`, `react-icons/fa`, `react-icons/ci`, `react-icons/md`) & `react-hot-toast`
+
+---
+
+## 📊 Application Architecture & Diagrams
+
+### 1. Route Protection & Auth Popup Flow
+
+```mermaid
+flowchart TD
+    A[User clicks route /watch or /upload] --> B[AuthLayout Wrapper]
+    B --> C{Is User Logged In?}
+    C -->|Yes| D[Render Protected Component]
+    C -->|No| E[Blur Background & Freeze Interaction]
+    E --> F[Display LoginPopup Overlay Modal]
+    F --> G{User Action}
+    G -->|Click Close X or Backdrop| H[Redirect to Home Page /]
+    G -->|Submit Login Form| I[Dispatch userLogin Thunk]
+    I -->|Success| D
+```
+
+---
+
+### 2. Redux Toolkit Data & API Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor UI as React Component
+    participant Thunk as Redux Async Thunk
+    participant Axios as axiosInstance.js
+    participant Reducer as Redux Slice Reducer
+    participant Store as Redux Store
+
+    UI->>Thunk: dispatch(fetchVideos(params))
+    Thunk->>Axios: axiosInstance.get('/videos')
+    alt Delay > 2.5s (Render Cold Start)
+        Axios-->>UI: toast.loading("Backend is connecting... Please be patient")
+    end
+    Axios-->>Thunk: API Response Payload
+    alt Request Succeeded
+        Axios-->>UI: toast.dismiss()
+        Thunk->>Reducer: fulfillWithValue(data)
+        Reducer->>Store: Update state.video.videos
+        Store-->>UI: Re-render UI with new videos
+    else Request Failed (401 / Network Error)
+        Axios-->>UI: Interceptor handles / suppresses toast
+        Thunk->>Reducer: rejectWithValue(error)
+    end
+```
+
+---
+
+
 

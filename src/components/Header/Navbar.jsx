@@ -13,12 +13,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { IoMdLogOut } from "react-icons/io";
 import { CiSettings, CiUser, CiRepeat } from "react-icons/ci";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { userLogout } from "../../store/Slices/authSlice.js";
 
 function Navbar() {
     const [toggleMenu, setToggleMenu] = useState(false);
     const [openSearch, setOpenSearch] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+    const [showGithubDropdown, setShowGithubDropdown] = useState(false);
     const authStatus = useSelector((state) => state.auth.status);
     const username = useSelector((state) => state.auth?.userData?.username);
     const profileImg = useSelector((state) => state.auth.userData?.avatar.url);
@@ -77,19 +79,69 @@ function Navbar() {
                     )}
                 </div>
 
+                {/* GitHub Links Dropdown */}
+                <div className="relative flex items-center">
+                    <button
+                        onClick={() => setShowGithubDropdown(!showGithubDropdown)}
+                        className="flex items-center gap-1.5 bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white px-2.5 py-1.5 rounded-lg border border-gray-700 transition duration-200 shadow-md text-xs sm:text-sm font-medium"
+                        title="GitHub Repositories"
+                    >
+                        <FaGithub size={18} />
+                        <span className="hidden md:inline">GitHub</span>
+                    </button>
+
+                    {showGithubDropdown && (
+                        <>
+                            <div
+                                className="fixed inset-0 z-40"
+                                onClick={() => setShowGithubDropdown(false)}
+                            ></div>
+                            <div className="absolute right-0 top-10 z-50 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-xl p-2 flex flex-col gap-1 text-sm">
+                                <div className="px-3 py-1.5 text-xs text-gray-400 font-semibold border-b border-gray-700">
+                                    Source Code Repositories
+                                </div>
+                                <a
+                                    href="https://github.com/vikrant48/Video_Mela_frontend"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center justify-between px-3 py-2 text-gray-200 hover:bg-purple-600/30 hover:text-white rounded-md transition"
+                                    onClick={() => setShowGithubDropdown(false)}
+                                >
+                                    <span className="flex items-center gap-2">
+                                        <FaGithub size={16} /> Frontend Repo
+                                    </span>
+                                    <FaExternalLinkAlt size={12} className="text-gray-400" />
+                                </a>
+                                <a
+                                    href="https://github.com/vikrant48/Video_Mela_backend"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center justify-between px-3 py-2 text-gray-200 hover:bg-purple-600/30 hover:text-white rounded-md transition"
+                                    onClick={() => setShowGithubDropdown(false)}
+                                >
+                                    <span className="flex items-center gap-2">
+                                        <FaGithub size={16} /> Backend Repo
+                                    </span>
+                                    <FaExternalLinkAlt size={12} className="text-gray-400" />
+                                </a>
+                            </div>
+                        </>
+                    )}
+                </div>
+
                 {authStatus ? (
                     <div className="flex items-center gap-2 sm:gap-4">
                         {/* Upload Video Button */}
-                        <Link 
+                        <Link
                             to="/upload"
                             className="hidden sm:flex items-center gap-2 bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 font-medium shadow-lg hover:shadow-purple-500/25 hover:scale-105"
                         >
                             <MdVideoCall size={20} />
                             <span>Upload</span>
                         </Link>
-                        
+
                         <div className="relative">
-                            <button 
+                            <button
                                 className="rounded-full cursor-pointer hover:ring-2 hover:ring-purple-500 active:ring-purple-600 transition-all duration-200 p-1 touch-manipulation"
                                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
                             >
@@ -99,75 +151,75 @@ function Navbar() {
                                     className="rounded-full w-8 h-8 sm:w-10 sm:h-10 object-cover border border-gray-600 shadow-md"
                                 />
                             </button>
-                        
-                        {/* Profile Dropdown */}
-                        {showProfileDropdown && (
-                            <>
-                                {/* Backdrop */}
-                                <div 
-                                    className="fixed inset-0 z-40"
-                                    onClick={() => setShowProfileDropdown(false)}
-                                ></div>
-                                
-                                {/* Dropdown Panel */}
-                                <div className="fixed right-2 sm:right-4 top-14 sm:top-16 z-50 w-72 sm:w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 border border-gray-700/50 rounded-lg shadow-2xl backdrop-blur-sm transform transition-all duration-300 ease-out animate-slide-in-right">
-                                    {/* Header */}
-                                    <div className="p-3 sm:p-4 border-b border-gray-700/50">
-                                        <div className="flex items-center gap-3">
-                                            <img
-                                                src={profileImg}
-                                                alt="profile"
-                                                className="rounded-full w-10 h-10 sm:w-12 sm:h-12 object-cover border border-gray-600 shadow-md"
-                                            />
-                                            <div>
-                                                <h3 className="text-white font-semibold text-base sm:text-lg">{username}</h3>
-                                                <p className="text-gray-400 text-xs sm:text-sm">Manage your account</p>
+
+                            {/* Profile Dropdown */}
+                            {showProfileDropdown && (
+                                <>
+                                    {/* Backdrop */}
+                                    <div
+                                        className="fixed inset-0 z-40"
+                                        onClick={() => setShowProfileDropdown(false)}
+                                    ></div>
+
+                                    {/* Dropdown Panel */}
+                                    <div className="fixed right-2 sm:right-4 top-14 sm:top-16 z-50 w-72 sm:w-80 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 border border-gray-700/50 rounded-lg shadow-2xl backdrop-blur-sm transform transition-all duration-300 ease-out animate-slide-in-right">
+                                        {/* Header */}
+                                        <div className="p-3 sm:p-4 border-b border-gray-700/50">
+                                            <div className="flex items-center gap-3">
+                                                <img
+                                                    src={profileImg}
+                                                    alt="profile"
+                                                    className="rounded-full w-10 h-10 sm:w-12 sm:h-12 object-cover border border-gray-600 shadow-md"
+                                                />
+                                                <div>
+                                                    <h3 className="text-white font-semibold text-base sm:text-lg">{username}</h3>
+                                                    <p className="text-gray-400 text-xs sm:text-sm">Manage your account</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Menu Items */}
+                                        <div className="p-2">
+                                            <Link
+                                                to="/settings/account"
+                                                className="flex items-center gap-3 px-3 sm:px-4 py-3 text-white hover:bg-gray-700 active:bg-gray-600 rounded-lg transition-colors touch-manipulation"
+                                                onClick={() => setShowProfileDropdown(false)}
+                                            >
+                                                <CiUser size={20} />
+                                                <span className="text-sm sm:text-base">Edit Profile</span>
+                                            </Link>
+
+                                            <div className="flex items-center gap-3 px-4 py-3 text-gray-400 cursor-not-allowed rounded-lg">
+                                                <CiRepeat size={20} />
+                                                <span>Switch Account</span>
+                                                <span className="ml-auto text-xs bg-gray-700 px-2 py-1 rounded">Coming Soon</span>
+                                            </div>
+
+                                            <Link
+                                                to="/settings"
+                                                className="flex items-center gap-3 px-4 py-3 text-white hover:bg-gray-700 rounded-lg transition-colors"
+                                                onClick={() => setShowProfileDropdown(false)}
+                                            >
+                                                <CiSettings size={20} />
+                                                <span>Settings</span>
+                                            </Link>
+
+                                            <div className="border-t border-gray-700 mt-2 pt-2">
+                                                <button
+                                                    onClick={() => {
+                                                        setShowProfileDropdown(false);
+                                                        logout();
+                                                    }}
+                                                    className="flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors w-full text-left"
+                                                >
+                                                    <IoMdLogOut size={20} />
+                                                    <span>Logout</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    {/* Menu Items */}
-                                    <div className="p-2">
-                                        <Link 
-                                            to="/settings/account"
-                                            className="flex items-center gap-3 px-3 sm:px-4 py-3 text-white hover:bg-gray-700 active:bg-gray-600 rounded-lg transition-colors touch-manipulation"
-                                            onClick={() => setShowProfileDropdown(false)}
-                                        >
-                                            <CiUser size={20} />
-                                            <span className="text-sm sm:text-base">Edit Profile</span>
-                                        </Link>
-                                        
-                                        <div className="flex items-center gap-3 px-4 py-3 text-gray-400 cursor-not-allowed rounded-lg">
-                                            <CiRepeat size={20} />
-                                            <span>Switch Account</span>
-                                            <span className="ml-auto text-xs bg-gray-700 px-2 py-1 rounded">Coming Soon</span>
-                                        </div>
-                                        
-                                        <Link 
-                                            to="/settings"
-                                            className="flex items-center gap-3 px-4 py-3 text-white hover:bg-gray-700 rounded-lg transition-colors"
-                                            onClick={() => setShowProfileDropdown(false)}
-                                        >
-                                            <CiSettings size={20} />
-                                            <span>Settings</span>
-                                        </Link>
-                                        
-                                        <div className="border-t border-gray-700 mt-2 pt-2">
-                                            <button 
-                                                onClick={() => {
-                                                    setShowProfileDropdown(false);
-                                                    logout();
-                                                }}
-                                                className="flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors w-full text-left"
-                                            >
-                                                <IoMdLogOut size={20} />
-                                                <span>Logout</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        )}
+                                </>
+                            )}
                         </div>
                     </div>
                 ) : (
