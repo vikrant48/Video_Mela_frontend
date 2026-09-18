@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Button, EditAvatar } from "../index";
+import { useEffect, useState } from "react";
+import { Button } from "../index";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSubscription } from "../../store/Slices/subscriptionSlice";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function ChannelHeader({
     coverImage,
@@ -13,7 +13,6 @@ function ChannelHeader({
     subscribedCount,
     isSubscribed,
     channelId,
-    edit,
 }) {
     const [localIsSubscribed, setLocalIsSubscribed] = useState(isSubscribed);
     const [localSubscribersCount, setLocalSubscribersCount] =
@@ -45,35 +44,22 @@ function ChannelHeader({
                         <div className="relative overflow-hidden">
                             <img
                                 src={coverImage}
-                                className="sm:h-48 h-32 w-full object-cover transition-transform duration-300 hover:scale-105"
+                                className="sm:h-28 h-20 w-full object-cover transition-transform duration-300 hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            {edit && (
-                                <div className="absolute inset-0 flex justify-center items-center bg-black/50 backdrop-blur-sm">
-                                    <EditAvatar
-                                        cover={true}
-                                        preImage={coverImage}
-                                    />
-                                </div>
-                            )}
                         </div>
                     ) : (
-                        <div className="sm:h-48 h-32 w-full bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-b border-gray-700"></div>
+                        <div className="sm:h-28 h-20 w-full bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-b border-gray-700"></div>
                     )}
                 </section>
 
-                <section className="w-full sm:px-6 p-4 flex sm:flex-row flex-col items-start sm:gap-6 bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
-                    <div className="h-12">
-                        <div className="relative sm:w-36 w-32 sm:h-36 h-32">
+                <section className="w-full sm:px-6 px-4 py-3 flex sm:flex-row flex-col items-start sm:gap-6 bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
+                    <div className="h-10 sm:h-12 flex items-center">
+                        <div className="relative sm:w-28 w-20 sm:h-28 h-20 sm:-bottom-6 -bottom-4 flex-shrink-0 z-10">
                             <img
                                 src={avatar}
-                                className="rounded-full sm:w-36 w-32 sm:h-36 h-32 object-cover absolute sm:bottom-12 bottom-24 ring-4 ring-purple-500/30 hover:ring-purple-500/60 transition-all duration-300"
+                                className="rounded-full w-full h-full object-cover ring-4 ring-purple-500/40 hover:ring-purple-500/70 transition-all duration-300 shadow-xl"
                             />
-                            {edit && (
-                                <div className="absolute inset-0 flex justify-center items-start bg-black/50 backdrop-blur-sm rounded-full">
-                                    <EditAvatar preImage={avatar} />
-                                </div>
-                            )}
                         </div>
                     </div>
                     <div className="w-full md:h-28 sm:h-24 flex justify-between items-start px-1">
@@ -97,14 +83,7 @@ function ChannelHeader({
                                 </p>
                             </div>
                         </div>
-                        {user == userProfile && !edit && (
-                            <Link to={"/edit"}>
-                                <Button className="border-slate-500 hover:scale-110 transition-all text-black font-bold px-4 py-1 bg-purple-500">
-                                    Edit
-                                </Button>
-                            </Link>
-                        )}
-                        {user != userProfile && !edit && (
+                        {user != userProfile && (
                             <Button
                                 onClick={handleSubscribe}
                                 className="border-slate-500 hover:scale-110 transition-all text-black font-bold px-4 py-1 bg-purple-500"
@@ -112,18 +91,22 @@ function ChannelHeader({
                                 {localIsSubscribed ? "Subscribed" : "Subscribe"}
                             </Button>
                         )}
-                        {edit && (
-                            <Link to={`/channel/${username}`}>
-                                <Button className="border-slate-500 hover:scale-110 transition-all text-black font-bold px-4 py-1 bg-purple-500">
-                                    View Channel
-                                </Button>
-                            </Link>
-                        )}
                     </div>
                 </section>
             </div>
         </>
     );
 }
+
+ChannelHeader.propTypes = {
+    coverImage: PropTypes.string,
+    avatar: PropTypes.string,
+    username: PropTypes.string,
+    fullName: PropTypes.string,
+    subscribersCount: PropTypes.number,
+    subscribedCount: PropTypes.number,
+    isSubscribed: PropTypes.bool,
+    channelId: PropTypes.string,
+};
 
 export default ChannelHeader;

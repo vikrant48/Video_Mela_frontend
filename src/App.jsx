@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { AuthLayout, Login, SignUp } from "./components/index";
+import { AuthLayout } from "./components/index";
 import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
@@ -10,11 +10,9 @@ import {
     ChannelVideos,
     ChannelTweets,
     LikedVideos,
-    VideoDetail,
     ChannelSubscribers,
     MySubscriptions,
     AdminDashboard,
-    EditChannel,
     HomePage,
     SearchVideos,
     TermsAndConditions,
@@ -130,13 +128,17 @@ function App() {
                         }
                     />
                     <Route
-                        path="/edit"
+                        path="/settings"
                         element={
                             <AuthLayout authentication>
-                                <EditChannel />
+                                <Settings />
                             </AuthLayout>
                         }
                     >
+                        <Route
+                            index
+                            element={<Navigate to="personalInfo" replace />}
+                        />
                         <Route
                             path="personalInfo"
                             element={
@@ -147,21 +149,8 @@ function App() {
                         />
                         <Route
                             path="password"
-                            element={
-                                <AuthLayout authentication>
-                                    <ChangePassword />
-                                </AuthLayout>
-                            }
+                            element={<Navigate to="/settings/account" replace />}
                         />
-                    </Route>
-                    <Route
-                        path="/settings"
-                        element={
-                            <AuthLayout authentication>
-                                <Settings />
-                            </AuthLayout>
-                        }
-                    >
                         <Route
                             path="account"
                             element={

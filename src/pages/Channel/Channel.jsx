@@ -18,24 +18,29 @@ function Channel() {
     window.scrollTo(0, 0);
 
     return (
-        <>
-            {channel && (
-                <ChannelHeader
-                    username={username}
-                    coverImage={channel?.coverImage?.url || channel?.coverImage}
-                    avatar={channel?.avatar?.url || channel?.avatar}
-                    subscribedCount={channel?.channelsSubscribedToCount}
-                    fullName={channel?.fullName}
-                    subscribersCount={channel?.subcribersCount}
-                    isSubscribed={channel?.isSubscribed}
-                    channelId={channel?._id}
-                />
-            )}
-            <ChannelNavigate username={username} />
-            <div className="overflow-y-scroll h-[32rem] sm:h-96 mb-20 sm:mb-0">
+        <div className="w-full flex flex-col h-[calc(100vh-70px)] overflow-hidden">
+            {/* Fixed Header & Navigation Tabs */}
+            <div className="flex-shrink-0 sticky top-0 z-20 shadow-md">
+                {channel && (
+                    <ChannelHeader
+                        username={username}
+                        coverImage={channel?.coverImage?.url || channel?.coverImage}
+                        avatar={channel?.avatar?.url || channel?.avatar}
+                        subscribedCount={channel?.channelsSubscribedToCount}
+                        fullName={channel?.fullName}
+                        subscribersCount={channel?.subcribersCount}
+                        isSubscribed={channel?.isSubscribed}
+                        channelId={channel?._id}
+                    />
+                )}
+                <ChannelNavigate username={username} />
+            </div>
+
+            {/* Scrollable Tab Data Content (Videos, Playlists, Tweets, etc.) */}
+            <div className="flex-1 overflow-y-auto p-4 min-h-0 custom-scrollbar">
                 <Outlet />
             </div>
-        </>
+        </div>
     );
 }
 

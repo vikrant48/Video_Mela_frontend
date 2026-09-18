@@ -150,9 +150,12 @@ export const updateUserDetails = createAsyncThunk(
                 data
             );
             toast.success("Updated details successfully!!!");
-            return response.data;
+            if (response.data?.data) {
+                localStorage.setItem("userData", JSON.stringify(response.data.data));
+            }
+            return response.data.data;
         } catch (error) {
-            toast.error(error?.response?.data?.error);
+            toast.error(error?.response?.data?.error || error?.response?.data?.message || "Failed to update details");
             throw error;
         }
     }

@@ -23,7 +23,7 @@ function Navbar() {
     const [showGithubDropdown, setShowGithubDropdown] = useState(false);
     const authStatus = useSelector((state) => state.auth.status);
     const username = useSelector((state) => state.auth?.userData?.username);
-    const profileImg = useSelector((state) => state.auth.userData?.avatar.url);
+    const profileImg = useSelector((state) => state.auth?.userData?.avatar?.url || state.auth?.userData?.avatar);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
