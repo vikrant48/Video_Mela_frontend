@@ -19,6 +19,7 @@ function EditPersonalInfo() {
     const auth = useSelector((state) => state.auth?.userData);
     const loading = useSelector((state) => state.auth?.loading);
     const [showAvatarEdit, setShowAvatarEdit] = useState(false);
+    const [showCoverEdit, setShowCoverEdit] = useState(false);
     const [hasChanges, setHasChanges] = useState(false);
 
     const watchedFields = watch();
@@ -63,37 +64,90 @@ function EditPersonalInfo() {
     return (
         <div className="max-w-4xl text-white space-y-6">
             {showAvatarEdit && (
-                <EditAvatar setEditAvatar={setShowAvatarEdit} />
+                <EditAvatar
+                    preImage={auth?.avatar?.url || auth?.avatar}
+                    onClose={() => setShowAvatarEdit(false)}
+                />
             )}
 
-            {/* Profile Picture Section */}
+            {showCoverEdit && (
+                <EditAvatar
+                    cover={true}
+                    preImage={auth?.coverImage?.url || auth?.coverImage}
+                    onClose={() => setShowCoverEdit(false)}
+                />
+            )}
+
+            {/* Profile Picture & Cover Image Section */}
             <div className="bg-gray-800 rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">Profile Picture</h2>
-                <div className="flex items-center gap-4">
-                    <div className="relative">
-                        {auth?.avatar?.url || auth?.avatar ? (
-                            <img
-                                src={auth?.avatar?.url || auth?.avatar}
-                                alt="Profile"
-                                className="w-20 h-20 rounded-full object-cover border-2 border-purple-500/50"
-                            />
-                        ) : (
-                            <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center border-2 border-gray-600">
-                                <RxAvatar size={40} className="text-gray-400" />
-                            </div>
-                        )}
-                    </div>
-                    <div>
-                        <Button
+                <h2 className="text-xl font-semibold mb-4">Channel Branding</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Profile Avatar Card */}
+                    <div className="flex items-center gap-4 bg-gray-900/60 p-4 rounded-xl border border-gray-700/60">
+                        <div
                             onClick={() => setShowAvatarEdit(true)}
-                            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 font-medium transition-colors"
+                            className="relative cursor-pointer group flex-shrink-0"
+                            title="Click to change avatar"
                         >
-                            <GrEdit size={16} />
-                            Change Avatar
-                        </Button>
-                        <p className="text-sm text-gray-400 mt-1">
-                            JPG, PNG or GIF. Max size 2MB.
-                        </p>
+                            {auth?.avatar?.url || auth?.avatar ? (
+                                <img
+                                    src={auth?.avatar?.url || auth?.avatar}
+                                    alt="Profile"
+                                    className="w-20 h-20 rounded-full object-cover border-2 border-purple-500/50 group-hover:border-purple-400 transition-all"
+                                />
+                            ) : (
+                                <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center border-2 border-gray-600 group-hover:border-purple-400 transition-all">
+                                    <RxAvatar size={40} className="text-gray-400" />
+                                </div>
+                            )}
+                        </div>
+                        <div className="space-y-1">
+                            <h3 className="text-sm font-medium text-gray-200">Profile Picture</h3>
+                            <Button
+                                onClick={() => setShowAvatarEdit(true)}
+                                className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors cursor-pointer"
+                            >
+                                <GrEdit size={14} />
+                                Change Avatar
+                            </Button>
+                            <p className="text-xs text-gray-400">
+                                JPG, PNG or GIF. Max 2MB.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Cover Banner Card */}
+                    <div className="flex items-center gap-4 bg-gray-900/60 p-4 rounded-xl border border-gray-700/60">
+                        <div
+                            onClick={() => setShowCoverEdit(true)}
+                            className="relative cursor-pointer group flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border border-gray-700 bg-gray-800 flex items-center justify-center"
+                            title="Click to change cover image"
+                        >
+                            {auth?.coverImage?.url || auth?.coverImage ? (
+                                <img
+                                    src={auth?.coverImage?.url || auth?.coverImage}
+                                    alt="Cover Banner"
+                                    className="w-full h-full object-cover group-hover:opacity-80 transition-all"
+                                />
+                            ) : (
+                                <span className="text-xs text-gray-400 text-center px-1">
+                                    No Cover
+                                </span>
+                            )}
+                        </div>
+                        <div className="space-y-1">
+                            <h3 className="text-sm font-medium text-gray-200">Cover Image</h3>
+                            <Button
+                                onClick={() => setShowCoverEdit(true)}
+                                className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors cursor-pointer"
+                            >
+                                <GrEdit size={14} />
+                                Change Cover
+                            </Button>
+                            <p className="text-xs text-gray-400">
+                                JPG, PNG or GIF. Max 2MB.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

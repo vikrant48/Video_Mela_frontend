@@ -23,7 +23,7 @@ import {
     ReportHistory,
     UploadVideoPage,
 } from "./pages";
-import { EditPersonalInfo, ChangePassword, Layout } from "./components";
+import { EditPersonalInfo, Layout } from "./components";
 import {
     AccountSettings,
     PrivacySettings,
