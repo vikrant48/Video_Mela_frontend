@@ -5,25 +5,31 @@
  * This helps prevent unnecessary API calls when user is clearly not authenticated
  */
 export const isUserLoggedIn = () => {
-  // Check if there's user data in localStorage
-  const userData = localStorage.getItem('userData');
-  
+  // Check if there's accessToken or user data in localStorage
+  const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+  const userData = typeof window !== 'undefined' ? localStorage.getItem('userData') : null;
+
   // Check if there are any auth-related cookies
-  const hasAuthCookies = document.cookie.includes('accessToken') || 
-                        document.cookie.includes('refreshToken');
-  
-  return !!(userData || hasAuthCookies);
+  const hasAuthCookies = typeof document !== 'undefined' &&
+    (document.cookie.includes('accessToken') || document.cookie.includes('refreshToken'));
+
+  return !!(token || userData || hasAuthCookies);
 };
 
 /**
  * Clear all authentication data
  */
 export const clearAuthData = () => {
-  localStorage.removeItem('userData');
-  
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userData');
+  }
+
   // Clear auth cookies by setting them to expire
-  document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  if (typeof document !== 'undefined') {
+    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
 };
 
 /**

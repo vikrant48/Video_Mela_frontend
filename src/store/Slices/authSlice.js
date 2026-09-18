@@ -26,8 +26,6 @@ export const createAccount = createAsyncThunk("register", async (data) => {
         formData.append("coverImage", data.coverImage[0]);
     }
 
-
-
     try {
         const response = await axiosInstance.post("/users/register", formData);
         console.log(response.data);
@@ -46,6 +44,9 @@ export const userLogin = createAsyncThunk("login", async (data) => {
         if (response.data?.data?.accessToken) {
             localStorage.setItem("accessToken", response.data.data.accessToken);
         }
+        if (response.data?.data?.user) {
+            localStorage.setItem("userData", JSON.stringify(response.data.data.user));
+        }
         return response.data.data.user;
     } catch (error) {
         toast.error(error?.response?.data?.error);
@@ -57,10 +58,12 @@ export const userLogout = createAsyncThunk("logout", async () => {
     try {
         const response = await axiosInstance.post("/users/logout");
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("userData");
         toast.success(response.data?.message);
         return response.data;
     } catch (error) {
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("userData");
         toast.error(error?.response?.data?.error);
         throw error;
     }
@@ -189,11 +192,15 @@ const authSlice = createSlice({
             state.loading = false;
             state.status = true;
             state.userData = action.payload;
+            if (action.payload) {
+                localStorage.setItem("userData", JSON.stringify(action.payload));
+            }
         });
         builder.addCase(getCurrentUser.rejected, (state) => {
             state.loading = false;
             state.status = false;
             state.userData = null;
+            localStorage.removeItem("userData");
         });
         builder.addCase(updateAvatar.pending, (state) => {
             state.loading = true;
