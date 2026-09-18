@@ -4,20 +4,25 @@ import Sidebar from "./components/Header/Sidebar";
 
 function Layout() {
     return (
-        <>
+        <div className="h-screen w-full flex flex-col overflow-hidden bg-black text-white">
             <Navbar />
-            <div className="sm:flex flex-none" style={{height: 'calc(100vh - 40px)'}}>
-                <div className="flex-shrink-0 h-full overflow-y-auto fixed left-0 top-10 z-40 hidden sm:block" style={{height: 'calc(100vh - 40px)'}}>
+            <div className="flex flex-1 overflow-hidden relative">
+                {/* Scroll 1: Left Sidebar Scroll */}
+                <aside className="hidden sm:block flex-shrink-0 h-full overflow-y-auto z-40 border-r border-gray-800">
                     <Sidebar />
-                </div>
-                <div className="sm:flex-1 h-full pb-16 sm:pb-0 sm:ml-20 md:ml-44 lg:ml-56" id="scrollableDiv" style={{height: 'calc(100vh - 40px)', overflowY: 'auto'}}>
+                </aside>
+
+                {/* Scroll 2: Right Main Page Content Scroll */}
+                <main className="flex-1 h-full overflow-y-auto pb-16 sm:pb-0" id="scrollableDiv">
                     <Outlet />
-                </div>
+                </main>
+
+                {/* Mobile Navigation */}
                 <div className="sm:hidden">
                     <Sidebar />
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

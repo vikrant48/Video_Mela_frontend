@@ -144,16 +144,23 @@ const videoSlice = createSlice({
         });
         builder.addCase(getAllVideos.fulfilled, (state, action) => {
             state.loading = false;
-            const page = action.meta.arg?.page || 1;
-            if (page > 1) {
-                state.videos.docs = [
-                    ...state.videos.docs,
-                    ...action.payload.docs
-                ];
+            const requestedPage = action.meta.arg?.page || 1;
+            const newDocs = action.payload.docs || [];
+
+            if (requestedPage > 1) {
+                // Filter out any duplicates by _id just in case
+                const existingIds = new Set(state.videos.docs.map((v) => v._id));
+                const uniqueNewDocs = newDocs.filter((v) => !existingIds.has(v._id));
+                state.videos.docs = [...state.videos.docs, ...uniqueNewDocs];
             } else {
-                state.videos.docs = action.payload.docs;
+                state.videos.docs = newDocs;
             }
-            state.videos.hasNextPage = action.payload.hasNextPage;
+
+            state.videos.page = action.payload.page || requestedPage;
+            state.videos.totalPages = action.payload.totalPages || 1;
+            state.videos.hasNextPage = action.payload.hasNextPage || false;
+            state.videos.hasPrevPage = action.payload.hasPrevPage || false;
+            state.videos.totalDocs = action.payload.totalDocs || state.videos.docs.length;
         });
         builder.addCase(publishAvideo.pending, (state) => {
             state.uploading = true;

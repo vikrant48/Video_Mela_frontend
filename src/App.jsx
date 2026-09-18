@@ -219,55 +219,31 @@ function App() {
                             </AuthLayout>
                         }
                     />
+                    <Route
+                        path="/collections"
+                        element={
+                            <AuthLayout authentication>
+                                <AdminDashboard />
+                            </AuthLayout>
+                        }
+                    />
                 </Route>
                 <Route
-                    path="/login"
-                    element={
-                        <AuthLayout authentication={false}>
-                            <Login />
-                        </AuthLayout>
-                    }
-                />
-                <Route
-                    path="/signup"
-                    element={
-                        <AuthLayout authentication={false}>
-                            <SignUp />
-                        </AuthLayout>
-                    }
-                />
-                <Route
-                    path="/watch/:videoId"
+                    path="/terms&conditions"
                     element={
                         <AuthLayout authentication>
-                            <VideoDetail />
+                            <TermsAndConditions />
                         </AuthLayout>
                     }
                 />
                 <Route
-                    path="/collections"
+                    path="/upload"
                     element={
                         <AuthLayout authentication>
-                            <AdminDashboard />
+                            <UploadVideoPage />
                         </AuthLayout>
                     }
                 />
-                <Route
-                        path="/terms&conditions"
-                        element={
-                            <AuthLayout authentication>
-                                <TermsAndConditions />
-                            </AuthLayout>
-                        }
-                    />
-                    <Route
-                        path="/upload"
-                        element={
-                            <AuthLayout authentication>
-                                <UploadVideoPage />
-                            </AuthLayout>
-                        }
-                    />
             </Routes>
 
             <Toaster

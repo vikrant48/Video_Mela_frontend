@@ -46,31 +46,16 @@
     }
 }
 
-/* Custom scrollbar */
-html {
-    overflow-x: hidden;
+/* Hide visible scrollbars while keeping full scroll functionality */
+html, body, div, section {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    @apply bg-gray-900/50;
-}
-
-::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-purple-600/80 to-pink-600/80 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    @apply from-purple-500 to-pink-500;
-}
-
-/* Firefox scrollbar */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: rgb(147 51 234 / 0.8) rgb(17 24 39 / 0.5);
+    display: none;
+    width: 0px;
+    height: 0px;
 }
 
 /* Profile dropdown slide-in animation */
