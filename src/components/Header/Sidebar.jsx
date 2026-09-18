@@ -127,12 +127,11 @@ function Sidebar() {
 
                         <div className="flex flex-col gap-2">
                             <NavLink
-                                to="/settings/account"
+                                to="/settings/personalInfo"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-2 sm:gap-3 justify-center sm:justify-start py-2 sm:py-3 px-2 sm:px-3 rounded-xl transition-all duration-300 border border-gray-600/50 touch-manipulation ${
-                                        isActive
-                                            ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/25 border-blue-500/50 scale-105"
-                                            : "hover:bg-gray-700/50 active:bg-gray-600/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
+                                    `flex items-center gap-2 sm:gap-3 justify-center sm:justify-start py-2 sm:py-3 px-2 sm:px-3 rounded-xl transition-all duration-300 border border-gray-600/50 touch-manipulation ${isActive
+                                        ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/25 border-blue-500/50 scale-105"
+                                        : "hover:bg-gray-700/50 active:bg-gray-600/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
@@ -147,10 +146,9 @@ function Sidebar() {
                             <NavLink
                                 to="/report-history"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${
-                                        isActive
-                                            ? "bg-gradient-to-r from-orange-600 to-orange-700 text-white shadow-lg shadow-orange-500/25 border-orange-500/50 scale-105"
-                                            : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
+                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${isActive
+                                        ? "bg-gradient-to-r from-orange-600 to-orange-700 text-white shadow-lg shadow-orange-500/25 border-orange-500/50 scale-105"
+                                        : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
@@ -163,10 +161,9 @@ function Sidebar() {
                             <NavLink
                                 to="/help"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${
-                                        isActive
-                                            ? "bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg shadow-green-500/25 border-green-500/50 scale-105"
-                                            : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
+                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${isActive
+                                        ? "bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg shadow-green-500/25 border-green-500/50 scale-105"
+                                        : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
@@ -179,10 +176,9 @@ function Sidebar() {
                             <NavLink
                                 to="/feedback"
                                 className={({ isActive }) =>
-                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${
-                                        isActive
-                                            ? "bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-lg shadow-teal-500/25 border-teal-500/50 scale-105"
-                                            : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
+                                    `flex items-center gap-3 justify-center sm:justify-start py-3 px-3 rounded-xl transition-all duration-300 border border-gray-600/50 ${isActive
+                                        ? "bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-lg shadow-teal-500/25 border-teal-500/50 scale-105"
+                                        : "hover:bg-gray-700/50 hover:text-white hover:border-gray-500/50 hover:scale-105 hover:shadow-md"
                                     }`
                                 }
                             >
@@ -207,10 +203,9 @@ function Sidebar() {
                         key={item.title}
                         to={item.url}
                         className={({ isActive }) =>
-                            `flex flex-col items-center p-2 rounded-xl transition-all duration-300 touch-manipulation min-w-0 flex-1 max-w-20 ${
-                                isActive
-                                    ? "text-purple-400 bg-gradient-to-t from-purple-600/20 to-purple-500/10 shadow-lg shadow-purple-500/25 scale-110 border border-purple-500/30"
-                                    : "text-gray-400 hover:text-white active:text-purple-300 hover:bg-gray-700/30 active:bg-gray-600/30 hover:scale-105"
+                            `flex flex-col items-center p-2 rounded-xl transition-all duration-300 touch-manipulation min-w-0 flex-1 max-w-20 ${isActive
+                                ? "text-purple-400 bg-gradient-to-t from-purple-600/20 to-purple-500/10 shadow-lg shadow-purple-500/25 scale-110 border border-purple-500/30"
+                                : "text-gray-400 hover:text-white active:text-purple-300 hover:bg-gray-700/30 active:bg-gray-600/30 hover:scale-105"
                             }`
                         }
                     >

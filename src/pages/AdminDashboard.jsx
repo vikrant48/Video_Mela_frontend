@@ -55,7 +55,7 @@ function AdminDashboard() {
 
     return (
         <Container>
-            <div className="w-full relative text-white space-y-6 sm:space-y-8 py-6 sm:py-8">
+            <div className="w-full relative text-white space-y-6 sm:space-y-8 py-6 sm:py-8 px-3 sm:px-4">
                 {popUp.uploadVideo && (
                     <UploadVideo setUploadVideoPopup={setPopUp} />
                 )}

@@ -48,6 +48,16 @@ function Navbar() {
             title: "Upload Video",
             url: "/upload",
         },
+        {
+            icon: <CiUser size={25} />,
+            title: "View Profile",
+            url: "/settings/personalInfo",
+        },
+        {
+            icon: <CiSettings size={25} />,
+            title: "Settings",
+            url: "/settings/account",
+        },
     ];
 
     return (
@@ -191,7 +201,7 @@ function Navbar() {
                                         {/* Menu Items */}
                                         <div className="p-2">
                                             <Link
-                                                to="/settings/account"
+                                                to="/settings/personalInfo"
                                                 className="flex items-center gap-3 px-3 sm:px-4 py-3 text-white hover:bg-gray-700 active:bg-gray-600 rounded-lg transition-colors touch-manipulation"
                                                 onClick={() => setShowProfileDropdown(false)}
                                             >
@@ -206,7 +216,7 @@ function Navbar() {
                                             </div>
 
                                             <Link
-                                                to="/settings"
+                                                to="/settings/account"
                                                 className="flex items-center gap-3 px-4 py-3 text-white hover:bg-gray-700 rounded-lg transition-colors"
                                                 onClick={() => setShowProfileDropdown(false)}
                                             >
