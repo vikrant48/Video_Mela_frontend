@@ -22,7 +22,7 @@ function Settings() {
             )}
 
             <Container>
-                <div className="text-white py-6">
+                <div className="text-white py-6 px-4 sm:px-6 md:px-8 max-w-6xl">
                     <div className="mb-6">
                         <h1 className="text-3xl font-bold mb-2">Settings</h1>
                         <p className="text-gray-400">
