@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { ChannelHeader, ChannelNavigate } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { userChannelProfile } from "../../store/Slices/userSlice.js";
@@ -10,7 +10,9 @@ function Channel() {
 
     const channel = useSelector((state) => state.user?.profileData);
     useEffect(() => {
-        dispatch(userChannelProfile(username));
+        if (username && username !== "undefined") {
+            dispatch(userChannelProfile(username));
+        }
     }, [dispatch, username]);
 
     window.scrollTo(0, 0);
@@ -20,8 +22,8 @@ function Channel() {
             {channel && (
                 <ChannelHeader
                     username={username}
-                    coverImage={channel?.coverImage.url}
-                    avatar={channel?.avatar.url}
+                    coverImage={channel?.coverImage?.url || channel?.coverImage}
+                    avatar={channel?.avatar?.url || channel?.avatar}
                     subscribedCount={channel?.channelsSubscribedToCount}
                     fullName={channel?.fullName}
                     subscribersCount={channel?.subcribersCount}

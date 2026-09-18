@@ -41,7 +41,7 @@ function Navbar() {
         {
             icon: <HiOutlineVideoCamera size={25} />,
             title: "My Content",
-            url: `/channel/${username}`,
+            url: username ? `/channel/${username}` : "/login",
         },
         {
             icon: <MdVideoCall size={25} />,

@@ -12,14 +12,16 @@ function ChannelVideos() {
     const [activeButton, setActiveButton] = useState("button1");
 
     useEffect(() => {
-        const sortBy = searchParams?.sortBy;
-        const sortType = searchParams?.sortType;
-        dispatch(getAllVideos({ userId, sortBy, sortType }));
+        if (userId) {
+            const sortBy = searchParams?.sortBy;
+            const sortType = searchParams?.sortType;
+            dispatch(getAllVideos({ userId, sortBy, sortType }));
+        }
 
         return () => dispatch(makeVideosNull());
     }, [dispatch, userId, searchParams]);
 
-    if (loading) {
+    if (loading || !userId) {
         return <HomeSkeleton />;
     }
 
@@ -40,11 +42,10 @@ function ChannelVideos() {
                         setActiveButton("button1");
                         handleSort("createdAt", "desc");
                     }}
-                    className={`group py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                        activeButton === "button1"
+                    className={`group py-2 px-4 rounded-lg font-medium transition-all duration-300 ${activeButton === "button1"
                             ? "bg-purple-500 text-white shadow-lg shadow-purple-500/25"
                             : "bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white"
-                    }`}
+                        }`}
                 >
                     Latest
                 </button>
@@ -53,11 +54,10 @@ function ChannelVideos() {
                         setActiveButton("button2");
                         handleSort("views", "desc");
                     }}
-                    className={`group py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                        activeButton === "button2"
+                    className={`group py-2 px-4 rounded-lg font-medium transition-all duration-300 ${activeButton === "button2"
                             ? "bg-purple-500 text-white shadow-lg shadow-purple-500/25"
                             : "bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white"
-                    }`}
+                        }`}
                 >
                     Popular
                 </button>
@@ -66,11 +66,10 @@ function ChannelVideos() {
                         setActiveButton("button3");
                         handleSort("createdAt", "asc");
                     }}
-                    className={`group py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
-                        activeButton === "button3"
+                    className={`group py-2 px-4 rounded-lg font-medium transition-all duration-300 ${activeButton === "button3"
                             ? "bg-purple-500 text-white shadow-lg shadow-purple-500/25"
                             : "bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white"
-                    }`}
+                        }`}
                 >
                     Oldest
                 </button>

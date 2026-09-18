@@ -26,11 +26,7 @@ export const createAccount = createAsyncThunk("register", async (data) => {
         formData.append("coverImage", data.coverImage[0]);
     }
 
-    // Log FormData contents
-    console.log("📦 FormData contents:");
-    for (let [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-    }
+
 
     try {
         const response = await axiosInstance.post("/users/register", formData);

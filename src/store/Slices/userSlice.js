@@ -10,7 +10,10 @@ const initialState = {
 
 export const userChannelProfile = createAsyncThunk(
     "getUserChannelProfile",
-    async (username) => {
+    async (username, { rejectWithValue }) => {
+        if (!username || username === "undefined") {
+            return null;
+        }
         try {
             const response = await axiosInstance.get(`/users/c/${username}`);
             return response.data.data;
@@ -18,7 +21,7 @@ export const userChannelProfile = createAsyncThunk(
             if (error?.response?.status !== 401) {
                 toast.error(error?.response?.data?.error || error?.response?.data?.message);
             }
-            throw error;
+            return rejectWithValue(error?.response?.data);
         }
     }
 );

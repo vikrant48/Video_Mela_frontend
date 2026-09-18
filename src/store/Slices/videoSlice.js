@@ -43,23 +43,23 @@ export const getAllVideos = createAsyncThunk(
 );
 
 export const publishAvideo = createAsyncThunk(
-    "publishAvideo", 
+    "publishAvideo",
     async (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("videoFile", data.videoFile[0]);
-    formData.append("thumbnail", data.thumbnail[0]);
+        const formData = new FormData();
+        formData.append("title", data.title);
+        formData.append("description", data.description);
+        formData.append("videoFile", data.videoFile[0]);
+        formData.append("thumbnail", data.thumbnail[0]);
 
-    try {
-        const response = await axiosInstance.post("/video", formData);
-        toast.success(response?.data?.message);
-        return response.data.data;
-    } catch (error) {
-        toast.error(error?.response?.data?.error);
-        throw error;
-    }
-});
+        try {
+            const response = await axiosInstance.post("/video", formData);
+            toast.success(response?.data?.message);
+            return response.data.data;
+        } catch (error) {
+            toast.error(error?.response?.data?.error);
+            throw error;
+        }
+    });
 
 export const updateAVideo = createAsyncThunk(
     "updateAVideo",
@@ -144,10 +144,15 @@ const videoSlice = createSlice({
         });
         builder.addCase(getAllVideos.fulfilled, (state, action) => {
             state.loading = false;
-            state.videos.docs = [
-                ...state.videos.docs,
-                ...action.payload.docs
-            ];
+            const page = action.meta.arg?.page || 1;
+            if (page > 1) {
+                state.videos.docs = [
+                    ...state.videos.docs,
+                    ...action.payload.docs
+                ];
+            } else {
+                state.videos.docs = action.payload.docs;
+            }
             state.videos.hasNextPage = action.payload.hasNextPage;
         });
         builder.addCase(publishAvideo.pending, (state) => {
