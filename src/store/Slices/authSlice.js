@@ -43,6 +43,9 @@ export const createAccount = createAsyncThunk("register", async (data) => {
 export const userLogin = createAsyncThunk("login", async (data) => {
     try {
         const response = await axiosInstance.post("/users/login", data);
+        if (response.data?.data?.accessToken) {
+            localStorage.setItem("accessToken", response.data.data.accessToken);
+        }
         return response.data.data.user;
     } catch (error) {
         toast.error(error?.response?.data?.error);
@@ -53,9 +56,11 @@ export const userLogin = createAsyncThunk("login", async (data) => {
 export const userLogout = createAsyncThunk("logout", async () => {
     try {
         const response = await axiosInstance.post("/users/logout");
+        localStorage.removeItem("accessToken");
         toast.success(response.data?.message);
         return response.data;
     } catch (error) {
+        localStorage.removeItem("accessToken");
         toast.error(error?.response?.data?.error);
         throw error;
     }
@@ -69,6 +74,9 @@ export const refreshAccessToken = createAsyncThunk(
                 "/users/refresh_token",
                 data
             );
+            if (response.data?.data?.accessToken) {
+                localStorage.setItem("accessToken", response.data.data.accessToken);
+            }
             return response.data;
         } catch (error) {
             toast.error(error?.response?.data?.error);

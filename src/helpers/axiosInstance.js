@@ -58,6 +58,13 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     startColdStartTimer();
+
+    // Attach Bearer token from localStorage as a fallback for cross-site remote authentication
+    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
     // Remove Content-Type header for FormData to allow browser to set it with boundary
     if (config.data instanceof FormData) {
       delete config.headers['Content-Type'];
