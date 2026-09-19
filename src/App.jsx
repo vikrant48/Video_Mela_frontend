@@ -23,7 +23,7 @@ import {
     ReportHistory,
     UploadVideoPage,
 } from "./pages";
-import { EditPersonalInfo, Layout } from "./components";
+import { EditPersonalInfo, Layout, Login, SignUp } from "./components";
 import {
     AccountSettings,
     PrivacySettings,
@@ -230,6 +230,22 @@ function App() {
                     element={
                         <AuthLayout authentication>
                             <UploadVideoPage />
+                        </AuthLayout>
+                    }
+                />
+                <Route
+                    path="/login"
+                    element={
+                        <AuthLayout authentication={false}>
+                            <Login />
+                        </AuthLayout>
+                    }
+                />
+                <Route
+                    path="/signup"
+                    element={
+                        <AuthLayout authentication={false}>
+                            <SignUp />
                         </AuthLayout>
                     }
                 />
