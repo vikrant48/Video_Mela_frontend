@@ -22,8 +22,9 @@ import {
     Feedback,
     ReportHistory,
     UploadVideoPage,
+    VideoDetail,
 } from "./pages";
-import { EditPersonalInfo, Layout, Login, SignUp } from "./components";
+import { EditPersonalInfo, Layout, Login, SignUp, ForgotPassword } from "./components";
 import {
     AccountSettings,
     PrivacySettings,
@@ -55,6 +56,14 @@ function App() {
                         element={
                             <AuthLayout authentication={false}>
                                 <SearchVideos />
+                            </AuthLayout>
+                        }
+                    />
+                    <Route
+                        path="watch/:videoId"
+                        element={
+                            <AuthLayout authentication>
+                                <VideoDetail />
                             </AuthLayout>
                         }
                     />
@@ -246,6 +255,14 @@ function App() {
                     element={
                         <AuthLayout authentication={false}>
                             <SignUp />
+                        </AuthLayout>
+                    }
+                />
+                <Route
+                    path="/forgot-password"
+                    element={
+                        <AuthLayout authentication={false}>
+                            <ForgotPassword />
                         </AuthLayout>
                     }
                 />
