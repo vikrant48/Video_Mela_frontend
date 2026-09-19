@@ -53,22 +53,20 @@ function ChannelHeader({
                     )}
                 </section>
 
-                <section className="w-full sm:px-6 px-4 py-3 flex sm:flex-row flex-col items-start sm:gap-6 bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
-                    <div className="h-10 sm:h-12 flex items-center">
-                        <div className="relative sm:w-28 w-20 sm:h-28 h-20 sm:-bottom-6 -bottom-4 flex-shrink-0 z-10">
-                            <img
-                                src={avatar}
-                                className="rounded-full w-full h-full object-cover ring-4 ring-purple-500/40 hover:ring-purple-500/70 transition-all duration-300 shadow-xl"
-                            />
-                        </div>
+                <section className="w-full sm:px-6 px-4 pb-4 flex flex-row items-start gap-3 sm:gap-6 bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
+                    <div className="relative w-20 h-20 sm:w-28 sm:h-28 -mt-8 sm:-mt-12 flex-shrink-0 z-10">
+                        <img
+                            src={avatar}
+                            className="rounded-full w-full h-full object-cover ring-4 ring-purple-500/40 hover:ring-purple-500/70 transition-all duration-300 shadow-xl bg-gray-900"
+                        />
                     </div>
-                    <div className="w-full md:h-28 sm:h-24 flex justify-between items-start px-1">
-                        <div className="space-y-2">
-                            <h1 className="text-2xl font-bold text-white">{fullName}</h1>
-                            <h3 className="text-base text-purple-400 font-medium">
+                    <div className="flex-1 flex justify-between items-start pt-2 min-w-0">
+                        <div className="space-y-1 sm:space-y-2 min-w-0">
+                            <h1 className="text-xl sm:text-2xl font-bold text-white truncate">{fullName}</h1>
+                            <h3 className="text-sm sm:text-base text-purple-400 font-medium truncate">
                                 @{username}
                             </h3>
-                            <div className="flex flex-wrap gap-4 text-sm">
+                            <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm pt-1">
                                 <p className="text-gray-300 flex items-center gap-1">
                                     <span className="text-purple-400 font-semibold">
                                         {localSubscribersCount || 0}
@@ -86,7 +84,7 @@ function ChannelHeader({
                         {user != userProfile && (
                             <Button
                                 onClick={handleSubscribe}
-                                className="border-slate-500 hover:scale-110 transition-all text-black font-bold px-4 py-1 bg-purple-500"
+                                className="border-slate-500 hover:scale-105 transition-all text-black font-bold px-3 sm:px-4 py-1.5 text-xs sm:text-sm bg-purple-500 rounded-lg ml-2 flex-shrink-0"
                             >
                                 {localIsSubscribed ? "Subscribed" : "Subscribe"}
                             </Button>
