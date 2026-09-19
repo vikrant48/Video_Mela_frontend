@@ -40,6 +40,7 @@ import SearchForSmallScreen from "./SearchForSmallScreen";
 import RecommendedVideos from "./RecommendedVideos";
 import AddToPlaylistModal from "./AddToPlaylistModal";
 import HomeSkeleton from "../skelton/homeSkelton";
+import ForgotPassword from "./ForgotPassword";
 
 export {
     Button,
@@ -83,5 +84,6 @@ export {
     SearchForSmallScreen,
     RecommendedVideos,
     AddToPlaylistModal,
-    HomeSkeleton
+    HomeSkeleton,
+    ForgotPassword
 };

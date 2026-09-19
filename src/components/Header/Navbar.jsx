@@ -280,7 +280,7 @@ function Navbar() {
                             />
                         </div>
 
-                        <div className="flex flex-col justify-between h-full py-5 px-4">
+                        <div className="flex flex-col justify-between h-full py-5 px-4 overflow-y-auto">
                             <div className="flex flex-col gap-4">
                                 {sidePanelItems.map((item) => (
                                     <NavLink
@@ -289,37 +289,42 @@ function Navbar() {
                                         onClick={() => setToggleMenu((prev) => !prev)}
                                         className={({ isActive }) =>
                                             `flex items-center gap-4 px-3 py-2 rounded-lg transition ${isActive
-                                                ? "bg-purple-500"
-                                                : "hover:bg-gray-800"
+                                                ? "bg-purple-500 text-white"
+                                                : "hover:bg-gray-800 text-gray-200"
                                             }`
                                         }
                                     >
                                         <div>{item.icon}</div>
-                                        <span className="text-lg">{item.title}</span>
+                                        <span className="text-lg font-medium">{item.title}</span>
                                     </NavLink>
                                 ))}
+
+                                {authStatus && (
+                                    <div
+                                        className="flex items-center gap-4 px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 cursor-pointer transition"
+                                        onClick={() => {
+                                            setToggleMenu(false);
+                                            logout();
+                                        }}
+                                    >
+                                        <IoMdLogOut size={25} />
+                                        <span className="text-lg font-medium">Logout</span>
+                                    </div>
+                                )}
                             </div>
 
-                            {!authStatus ? (
-                                <div className="flex flex-col space-y-3">
-                                    <Link to="/login">
+                            {!authStatus && (
+                                <div className="flex flex-col space-y-3 pt-4 border-t border-gray-700/50">
+                                    <Link to="/login" onClick={() => setToggleMenu(false)}>
                                         <Button className="w-full bg-gray-800 border border-gray-700 hover:bg-purple-600 hover:text-white py-2 transition rounded-lg">
                                             Login
                                         </Button>
                                     </Link>
-                                    <Link to="/signup">
-                                        <Button className="w-full bg-transparent border border-gray-700 hover:bg-purple-600 hover:text-white py-2 transition rounded-lg">
+                                    <Link to="/signup" onClick={() => setToggleMenu(false)}>
+                                        <Button className="w-full bg-transparent border border-gray-700 hover:bg-purple-600 hover:text-white py-2 transition rounded-lg text-white">
                                             Sign Up
                                         </Button>
                                     </Link>
-                                </div>
-                            ) : (
-                                <div
-                                    className="flex gap-3 items-center cursor-pointer px-3 py-2 border border-gray-700 rounded-lg hover:bg-gray-800 transition"
-                                    onClick={logout}
-                                >
-                                    <IoMdLogOut size={24} />
-                                    <span className="text-base">Logout</span>
                                 </div>
                             )}
                         </div>

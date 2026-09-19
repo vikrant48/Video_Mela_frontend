@@ -108,6 +108,14 @@ function Login() {
                                         {errors.password.message}
                                     </span>
                                 )}
+                                <div className="text-right mt-1">
+                                    <Link
+                                        to="/forgot-password"
+                                        className="text-xs sm:text-sm text-purple-400 hover:text-purple-300 transition duration-200"
+                                    >
+                                        Forgot Password?
+                                    </Link>
+                                </div>
                             </div>
 
                             <Button

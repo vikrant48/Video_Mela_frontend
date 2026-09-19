@@ -9,7 +9,6 @@ import {
     Description,
     Spinner,
     InfiniteScroll,
-    Navbar,
     RecommendedVideos,
 } from "../components";
 import {
@@ -45,43 +44,42 @@ function VideoDetail() {
 
     return (
         <>
-            <Navbar />
             <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800/50 to-gray-900">
                 <div className="flex flex-col xl:flex-row gap-3 sm:gap-4 lg:gap-6 p-3 sm:p-4 lg:p-6 max-w-[1400px] mx-auto">
                     {/* Main Video Content */}
                     <div className="flex-1 xl:max-w-4xl space-y-3 sm:space-y-4 lg:space-y-6">
-                    <Video
-                        src={video?.videoFile?.url}
-                        poster={video?.thumbnail?.url}
-                    />
-                    <Description
-                        avatar={video?.owner?.avatar.url}
-                        channelName={video?.owner?.username}
-                        createdAt={video?.createdAt}
-                        description={video?.description}
-                        isSubscribed={video?.owner?.isSubscribed}
-                        likesCount={video?.likesCount}
-                        subscribersCount={video?.owner?.subscribersCount}
-                        title={video?.title}
-                        views={video?.views}
-                        key={video?._id}
-                        isLiked={video?.isLiked}
-                        videoId={video?._id}
-                        channelId={video?.owner?._id}
-                        videoFile={video?.videoFile?.url}
-                    />
+                        <Video
+                            src={video?.videoFile?.url}
+                            poster={video?.thumbnail?.url}
+                        />
+                        <Description
+                            avatar={video?.owner?.avatar.url}
+                            channelName={video?.owner?.username}
+                            createdAt={video?.createdAt}
+                            description={video?.description}
+                            isSubscribed={video?.owner?.isSubscribed}
+                            likesCount={video?.likesCount}
+                            subscribersCount={video?.owner?.subscribersCount}
+                            title={video?.title}
+                            views={video?.views}
+                            key={video?._id}
+                            isLiked={video?.isLiked}
+                            videoId={video?._id}
+                            channelId={video?.owner?._id}
+                            videoFile={video?.videoFile?.url}
+                        />
                         {/* Comments Section */}
                         <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800/50 p-3 sm:p-4 lg:p-6 shadow-lg">
                             <div className="text-white font-semibold text-base sm:text-lg mb-3 sm:mb-4 flex items-center gap-2">
                                 <span className="text-purple-400 font-bold">{totalComments}</span>
                                 <span>Comments</span>
                             </div>
-                            
+
                             <TweetAndComment
                                 comment={true}
                                 videoId={video?._id}
                             />
-                            
+
                             <InfiniteScroll
                                 fetchMore={fetchMoreComments}
                                 hasNextPage={hasNextPage}
@@ -109,7 +107,7 @@ function VideoDetail() {
                             </InfiniteScroll>
                         </div>
                     </div>
-                    
+
                     {/* Recommended Videos Sidebar */}
                     <div className="xl:w-96 xl:flex-shrink-0">
                         <div className="sticky top-16 sm:top-20">

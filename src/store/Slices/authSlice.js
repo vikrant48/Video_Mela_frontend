@@ -161,6 +161,66 @@ export const updateUserDetails = createAsyncThunk(
     }
 );
 
+export const requestForgotPasswordOTP = createAsyncThunk(
+    "requestForgotPasswordOTP",
+    async ({ email }) => {
+        try {
+            const response = await axiosInstance.post("/users/forgot-password", { email });
+            toast.success(response.data?.message || "OTP sent successfully to your email!");
+            return response.data;
+        } catch (error) {
+            const errorMsg =
+                error?.response?.data?.message ||
+                error?.response?.data?.error ||
+                error?.message ||
+                "Failed to send OTP";
+            toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
+export const verifyForgotPasswordOTP = createAsyncThunk(
+    "verifyForgotPasswordOTP",
+    async ({ email, otp }) => {
+        try {
+            const response = await axiosInstance.post("/users/verify-otp", { email, otp });
+            toast.success(response.data?.message || "OTP verified successfully!");
+            return response.data?.data; // returns { resetToken, email }
+        } catch (error) {
+            const errorMsg =
+                error?.response?.data?.message ||
+                error?.response?.data?.error ||
+                error?.message ||
+                "OTP verification failed";
+            toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
+export const submitResetPassword = createAsyncThunk(
+    "submitResetPassword",
+    async ({ resetToken, newPassword }) => {
+        try {
+            const response = await axiosInstance.post("/users/reset-password", {
+                resetToken,
+                newPassword,
+            });
+            toast.success(response.data?.message || "Password reset successfully!");
+            return response.data;
+        } catch (error) {
+            const errorMsg =
+                error?.response?.data?.message ||
+                error?.response?.data?.error ||
+                error?.message ||
+                "Failed to reset password";
+            toast.error(errorMsg);
+            throw error;
+        }
+    }
+);
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
