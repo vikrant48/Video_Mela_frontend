@@ -3,32 +3,22 @@
 /**
  * Check if user appears to be logged in based on available indicators
  * This helps prevent unnecessary API calls when user is clearly not authenticated
+ *
+ * The auth tokens themselves are httpOnly cookies, invisible to page scripts by design,
+ * so the cached profile is the only client-side hint of a session.
  */
 export const isUserLoggedIn = () => {
-  // Check if there's accessToken or user data in localStorage
-  const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
   const userData = typeof window !== 'undefined' ? localStorage.getItem('userData') : null;
-
-  // Check if there are any auth-related cookies
-  const hasAuthCookies = typeof document !== 'undefined' &&
-    (document.cookie.includes('accessToken') || document.cookie.includes('refreshToken'));
-
-  return !!(token || userData || hasAuthCookies);
+  return !!userData;
 };
 
 /**
- * Clear all authentication data
+ * Clear all authentication data held by the page
+ * (the httpOnly auth cookies can only be cleared by the server, via /users/logout)
  */
 export const clearAuthData = () => {
   if (typeof window !== 'undefined') {
-    localStorage.removeItem('accessToken');
     localStorage.removeItem('userData');
-  }
-
-  // Clear auth cookies by setting them to expire
-  if (typeof document !== 'undefined') {
-    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
 };
 
@@ -42,6 +32,6 @@ export const shouldAttemptAuth = (url) => {
     '/users/register',
     '/users/login'
   ];
-  
+
   return !publicEndpoints.some(endpoint => url.includes(endpoint));
 };

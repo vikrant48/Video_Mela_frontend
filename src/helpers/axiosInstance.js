@@ -3,6 +3,12 @@ import { BASE_URL } from "../baseUrl.js";
 import toast from "react-hot-toast";
 import { isUserLoggedIn, clearAuthData, shouldAttemptAuth } from "./authUtils.js";
 
+// Request/response diagnostics (URLs, API error bodies) only in development builds,
+// never in users' browser consoles
+const devLog = (...args) => {
+  if (import.meta.env.DEV) console.log(...args);
+};
+
 let pendingRequestsCount = 0;
 let coldStartTimer = null;
 let coldStartToastId = null;
@@ -44,6 +50,14 @@ const clearColdStartTimer = () => {
   }
 };
 
+// Auth is cookie-only now. Remove the access token older versions stored in localStorage, where any
+// script on the page (e.g. an XSS payload) could read it.
+try {
+  localStorage.removeItem('accessToken');
+} catch {
+  // storage unavailable (e.g. blocked): nothing to clean up
+}
+
 // Create axios instance with default configuration
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -59,11 +73,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     startColdStartTimer();
 
-    // Attach Bearer token from localStorage as a fallback for cross-site remote authentication
-    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // No Authorization header: the httpOnly auth cookies are sent automatically (withCredentials)
 
     // Remove Content-Type header for FormData to allow browser to set it with boundary
     if (config.data instanceof FormData) {
@@ -87,13 +97,13 @@ axiosInstance.interceptors.response.use(
     clearColdStartTimer();
     const originalRequest = error.config;
 
-    console.error('URL:', originalRequest?.url);
-    console.error('Method:', originalRequest?.method?.toUpperCase());
-    console.error('Response Data:', error.response?.data);
+    devLog('URL:', originalRequest?.url);
+    devLog('Method:', originalRequest?.method?.toUpperCase());
+    devLog('Response Data:', error.response?.data);
 
     // Handle network errors / timeouts
     if (!error.response) {
-      console.error('Network Error Details:', {
+      devLog('Network Error Details:', {
         code: error.code,
         message: error.message,
         config: {
@@ -117,17 +127,17 @@ axiosInstance.interceptors.response.use(
       case 401:
         // If this is a refresh token request that failed, don't retry
         if (originalRequest.url?.includes('/refresh_token')) {
-          console.log('Refresh token request failed - user not logged in');
+          devLog('Refresh token request failed - user not logged in');
           clearAuthData();
           return Promise.reject(error);
         }
 
         // Check if user appears to be logged in before attempting refresh
         if (!isUserLoggedIn()) {
-          console.log('User not logged in - skipping token refresh');
+          devLog('User not logged in - skipping token refresh');
           // Only show error for requests that require authentication
           if (shouldAttemptAuth(originalRequest.url)) {
-            console.log('Authentication required for:', originalRequest.url);
+            devLog('Authentication required for:', originalRequest.url);
           }
           clearAuthData();
           return Promise.reject(error);
@@ -139,17 +149,17 @@ axiosInstance.interceptors.response.use(
 
           try {
             // Attempt to refresh the token
-            console.log('Attempting token refresh for:', originalRequest.url);
+            devLog('Attempting token refresh for:', originalRequest.url);
             const refreshResponse = await axiosInstance.post('/users/refresh_token', {});
 
             if (refreshResponse.status === 200) {
               // Token refreshed successfully, retry the original request
-              console.log('Token refreshed successfully, retrying request');
+              devLog('Token refreshed successfully, retrying request');
               return axiosInstance(originalRequest);
             }
           } catch (refreshError) {
             // Refresh failed - user needs to login
-            console.log('Token refresh failed - clearing auth data');
+            devLog('Token refresh failed - clearing auth data');
 
             // Only show toast for important requests
             if (shouldAttemptAuth(originalRequest.url) && !originalRequest.url?.includes('/current_user')) {
@@ -167,7 +177,7 @@ axiosInstance.interceptors.response.use(
           }
         } else {
           // This was already a retry or doesn't require auth - don't try again
-          console.log('Skipping retry for:', originalRequest.url);
+          devLog('Skipping retry for:', originalRequest.url);
           clearAuthData();
           return Promise.reject(error);
         }

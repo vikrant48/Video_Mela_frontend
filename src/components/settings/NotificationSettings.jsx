@@ -53,7 +53,6 @@ function NotificationSettings() {
         setLoading(true);
         try {
             // In a real app, you would send these settings to the backend
-            console.log('Saving notification settings:', settings);
             
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));

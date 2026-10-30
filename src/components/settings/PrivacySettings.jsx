@@ -34,7 +34,6 @@ function PrivacySettings() {
         setLoading(true);
         try {
             // In a real app, you would send these settings to the backend
-            console.log('Saving privacy settings:', settings);
             
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));

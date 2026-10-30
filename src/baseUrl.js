@@ -6,10 +6,13 @@ const getBaseUrl = () => {
   // Get the backend URL from environment variables
   const envBackendUrl = import.meta.env.VITE_BACKEND_URL;
   
-  // Fallback URLs for different environments
+  // Fallback URLs for different environments.
+  // Production uses the same-origin path proxied to Render by the vercel.json rewrite, so the
+  // httpOnly auth cookies are first-party (cross-site cookies to onrender.com get blocked by
+  // browsers, which is why the old token-in-localStorage workaround existed).
   const fallbackUrls = {
     development: 'http://localhost:8000/api/v1',
-    production: 'https://videomela-backend.onrender.com/api/v1'
+    production: '/api/v1'
   };
   
   // Return the appropriate URL

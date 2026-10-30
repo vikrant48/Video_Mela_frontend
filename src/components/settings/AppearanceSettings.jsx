@@ -61,7 +61,6 @@ function AppearanceSettings() {
             localStorage.setItem('appearanceSettings', JSON.stringify(settings));
             
             // In a real app, you would send these settings to the backend
-            console.log('Saving appearance settings:', settings);
             
             // Apply theme changes immediately
             applyThemeChanges();

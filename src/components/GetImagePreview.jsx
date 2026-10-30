@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import { FaCamera } from "react-icons/fa";
 
@@ -14,6 +14,13 @@ function GetImagePreview({
     rules = {}
 }) {
     const [preview, setPreview] = useState(null);
+
+    // Release each preview's object URL (it pins the file in memory) when it's replaced or on unmount
+    useEffect(() => {
+        return () => {
+            if (preview) URL.revokeObjectURL(preview);
+        };
+    }, [preview]);
 
     const handlePreview = (e) => {
         const files = e.target.files;

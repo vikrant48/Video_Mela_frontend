@@ -6,6 +6,9 @@ const initialState = {
     loading: false,
     status: false,
     userData: null,
+    // True once the startup session check (getCurrentUser) has finished, either way. Until then
+    // "not logged in" is unknown, so protected routes wait instead of flashing the login prompt.
+    authChecked: false,
 };
 
 export const createAccount = createAsyncThunk("register", async (data) => {
@@ -27,9 +30,7 @@ export const createAccount = createAsyncThunk("register", async (data) => {
     }
 
     try {
-        const response = await axiosInstance.post("/users/register", formData);
-        console.log(response.data);
-        toast.success("Registered successfully!!!");
+        const response = await axiosInstance.post("/users/register", formData);        toast.success("Registered successfully!!!");
         return response.data;
     } catch (error) {
         const errorMsg = error?.response?.data?.message || error?.response?.data?.error || error?.message || "Registration failed";
@@ -40,10 +41,8 @@ export const createAccount = createAsyncThunk("register", async (data) => {
 
 export const userLogin = createAsyncThunk("login", async (data) => {
     try {
+        // Auth tokens arrive as httpOnly cookies the browser manages; page scripts never see them
         const response = await axiosInstance.post("/users/login", data);
-        if (response.data?.data?.accessToken) {
-            localStorage.setItem("accessToken", response.data.data.accessToken);
-        }
         if (response.data?.data?.user) {
             localStorage.setItem("userData", JSON.stringify(response.data.data.user));
         }
@@ -57,12 +56,10 @@ export const userLogin = createAsyncThunk("login", async (data) => {
 export const userLogout = createAsyncThunk("logout", async () => {
     try {
         const response = await axiosInstance.post("/users/logout");
-        localStorage.removeItem("accessToken");
         localStorage.removeItem("userData");
         toast.success(response.data?.message);
         return response.data;
     } catch (error) {
-        localStorage.removeItem("accessToken");
         localStorage.removeItem("userData");
         toast.error(error?.response?.data?.error);
         throw error;
@@ -77,9 +74,6 @@ export const refreshAccessToken = createAsyncThunk(
                 "/users/refresh_token",
                 data
             );
-            if (response.data?.data?.accessToken) {
-                localStorage.setItem("accessToken", response.data.data.accessToken);
-            }
             return response.data;
         } catch (error) {
             toast.error(error?.response?.data?.error);
@@ -96,6 +90,7 @@ export const changePassword = createAsyncThunk(
                 "/users/change_password",
                 data
             );
+            // Other sessions are revoked server-side; this device gets fresh cookies in the response
             toast.success(response.data?.message);
             return response.data;
         } catch (error) {
@@ -149,13 +144,31 @@ export const updateUserDetails = createAsyncThunk(
                 "/users/update_account",
                 data
             );
-            toast.success("Updated details successfully!!!");
+            // Message differs when an email change is pending confirmation
+            toast.success(response.data?.message || "Updated details successfully!!!");
             if (response.data?.data) {
                 localStorage.setItem("userData", JSON.stringify(response.data.data));
             }
             return response.data.data;
         } catch (error) {
             toast.error(error?.response?.data?.error || error?.response?.data?.message || "Failed to update details");
+            throw error;
+        }
+    }
+);
+
+export const verifyEmailChange = createAsyncThunk(
+    "verifyEmailChange",
+    async (otp) => {
+        try {
+            const response = await axiosInstance.post("/users/verify-email-change", { otp });
+            toast.success(response.data?.message || "Email updated successfully");
+            if (response.data?.data) {
+                localStorage.setItem("userData", JSON.stringify(response.data.data));
+            }
+            return response.data.data;
+        } catch (error) {
+            toast.error(error?.response?.data?.error || error?.response?.data?.message || "Failed to verify code");
             throw error;
         }
     }
@@ -238,7 +251,14 @@ const authSlice = createSlice({
         builder.addCase(userLogin.fulfilled, (state, action) => {
             state.loading = false;
             state.status = true;
+            state.authChecked = true;
             state.userData = action.payload;
+        });
+        builder.addCase(userLogin.rejected, (state) => {
+            state.loading = false;
+        });
+        builder.addCase(createAccount.rejected, (state) => {
+            state.loading = false;
         });
         builder.addCase(userLogout.pending, (state) => {
             state.loading = true;
@@ -254,6 +274,7 @@ const authSlice = createSlice({
         builder.addCase(getCurrentUser.fulfilled, (state, action) => {
             state.loading = false;
             state.status = true;
+            state.authChecked = true;
             state.userData = action.payload;
             if (action.payload) {
                 localStorage.setItem("userData", JSON.stringify(action.payload));
@@ -262,6 +283,7 @@ const authSlice = createSlice({
         builder.addCase(getCurrentUser.rejected, (state) => {
             state.loading = false;
             state.status = false;
+            state.authChecked = true;
             state.userData = null;
             localStorage.removeItem("userData");
         });
@@ -297,6 +319,20 @@ const authSlice = createSlice({
         builder.addCase(updateUserDetails.fulfilled, (state, action) => {
             state.loading = false;
             state.userData = action.payload;
+        });
+        // Without this a failed save left the form stuck on "Saving..."
+        builder.addCase(updateUserDetails.rejected, (state) => {
+            state.loading = false;
+        });
+        builder.addCase(verifyEmailChange.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(verifyEmailChange.fulfilled, (state, action) => {
+            state.loading = false;
+            state.userData = action.payload;
+        });
+        builder.addCase(verifyEmailChange.rejected, (state) => {
+            state.loading = false;
         });
     },
 });

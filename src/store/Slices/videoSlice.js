@@ -16,7 +16,8 @@ const initialState = {
 
 export const getAllVideos = createAsyncThunk(
     "getAllVideos",
-    async ({ userId, sortBy = "createdAt", sortType = "asc", query = "", page = 1, limit = 500 }) => {
+    // limit 100 = the backend's maximum page size (larger values are capped server-side)
+    async ({ userId, sortBy = "createdAt", sortType = "asc", query = "", page = 1, limit = 100 }) => {
         try {
             const params = new URLSearchParams()
 

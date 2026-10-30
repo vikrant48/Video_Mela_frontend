@@ -143,6 +143,11 @@ function SignUp() {
                             placeholder="Enter password"
                             {...register("password", {
                                 required: "Password is required",
+                                // Mirrors the backend password policy
+                                minLength: {
+                                    value: 8,
+                                    message: "Password must be at least 8 characters long",
+                                },
                             })}
                             className="h-10"
                         />

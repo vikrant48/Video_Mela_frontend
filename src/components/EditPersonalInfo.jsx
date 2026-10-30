@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Input2, Button, EditAvatar } from "../components";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserDetails } from "../store/Slices/authSlice";
+import { updateUserDetails, verifyEmailChange } from "../store/Slices/authSlice";
 import { RxAvatar } from "react-icons/rx";
 import { GrEdit } from "react-icons/gr";
 
@@ -21,8 +21,14 @@ function EditPersonalInfo() {
     const [showAvatarEdit, setShowAvatarEdit] = useState(false);
     const [showCoverEdit, setShowCoverEdit] = useState(false);
     const [hasChanges, setHasChanges] = useState(false);
+    // Address awaiting confirmation with the code emailed to it
+    const [pendingEmail, setPendingEmail] = useState(null);
+    const [otp, setOtp] = useState("");
 
     const watchedFields = watch();
+    const emailChanged =
+        Boolean(auth) &&
+        (watchedFields.email ?? "").trim().toLowerCase() !== auth?.email;
 
     useEffect(() => {
         if (auth) {
@@ -47,10 +53,33 @@ function EditPersonalInfo() {
             fullName: data.fullName,
             email: data.email,
         };
+        // Changing email requires re-entering the password
+        if (emailChanged) {
+            payload.currentPassword = data.currentPassword;
+        }
         const res = await dispatch(updateUserDetails(payload));
+        setValue("currentPassword", "");
         if (updateUserDetails.fulfilled.match(res)) {
             setHasChanges(false);
+            // The email only changes once the code sent to the new address is confirmed
+            if (emailChanged) {
+                setPendingEmail(data.email.trim().toLowerCase());
+                setOtp("");
+            }
         }
+    };
+
+    const confirmEmailChange = async () => {
+        const res = await dispatch(verifyEmailChange(otp));
+        if (verifyEmailChange.fulfilled.match(res)) {
+            setPendingEmail(null);
+            setOtp("");
+        }
+    };
+
+    const cancelEmailChange = () => {
+        setPendingEmail(null);
+        setOtp("");
     };
 
     const resetChanges = (e) => {
@@ -212,6 +241,31 @@ function EditPersonalInfo() {
                         )}
                     </div>
 
+                    {emailChanged && (
+                        <div>
+                            <Input2
+                                label="Current Password"
+                                type="password"
+                                autoComplete="current-password"
+                                className="bg-gray-700 border-gray-600 text-white rounded-lg"
+                                {...register("currentPassword", {
+                                    validate: (value) =>
+                                        !emailChanged ||
+                                        Boolean(value) ||
+                                        "Enter your current password to change your email",
+                                })}
+                            />
+                            <p className="text-xs text-gray-400 mt-1">
+                                Required to change your email. We&apos;ll send a code to the new address to confirm it.
+                            </p>
+                            {errors.currentPassword && (
+                                <span className="text-sm text-red-400 mt-1 block">
+                                    {errors.currentPassword?.message}
+                                </span>
+                            )}
+                        </div>
+                    )}
+
                     <div className="flex gap-3 pt-4 border-t border-gray-700 justify-end">
                         <Button
                             type="button"
@@ -229,6 +283,47 @@ function EditPersonalInfo() {
                         </Button>
                     </div>
                 </form>
+
+                {pendingEmail && (
+                    <div className="mt-6 p-4 rounded-lg border border-purple-500/40 bg-gray-900/60 space-y-3">
+                        <p className="text-sm text-gray-300">
+                            Enter the 6-digit code we sent to{" "}
+                            <span className="font-medium text-white">{pendingEmail}</span>{" "}
+                            to confirm your new email. Your current email stays active until then.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-3 sm:items-end">
+                            <div className="sm:w-48">
+                                <Input2
+                                    label="Verification code"
+                                    type="text"
+                                    inputMode="numeric"
+                                    autoComplete="one-time-code"
+                                    maxLength={6}
+                                    value={otp}
+                                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                                    className="bg-gray-700 border-gray-600 text-white rounded-lg tracking-widest"
+                                />
+                            </div>
+                            <div className="flex gap-3">
+                                <Button
+                                    type="button"
+                                    onClick={confirmEmailChange}
+                                    disabled={loading || otp.length !== 6}
+                                    className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg disabled:opacity-50 transition-colors"
+                                >
+                                    Verify
+                                </Button>
+                                <Button
+                                    type="button"
+                                    onClick={cancelEmailChange}
+                                    className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-lg transition-colors"
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
