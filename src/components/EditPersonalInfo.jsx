@@ -140,7 +140,7 @@ function EditPersonalInfo() {
                                 Change Avatar
                             </Button>
                             <p className="text-xs text-gray-400">
-                                JPG, PNG or GIF. Max 2MB.
+                                JPG, PNG, WebP, GIF, AVIF or HEIC. Max 10 MB.
                             </p>
                         </div>
                     </div>
@@ -174,7 +174,7 @@ function EditPersonalInfo() {
                                 Change Cover
                             </Button>
                             <p className="text-xs text-gray-400">
-                                JPG, PNG or GIF. Max 2MB.
+                                JPG, PNG, WebP, GIF, AVIF or HEIC. Max 10 MB.
                             </p>
                         </div>
                     </div>

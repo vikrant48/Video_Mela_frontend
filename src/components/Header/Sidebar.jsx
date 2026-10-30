@@ -191,7 +191,7 @@ function Sidebar() {
                     </div>
 
                     <div className="text-xs text-center text-gray-400 border-t border-gray-700 pt-4">
-                        &copy; {new Date().getFullYear()}VideoMela. All rights reserved.
+                        &copy; {new Date().getFullYear()} VideoMela. All rights reserved.
                     </div>
                 </div>
             </div>

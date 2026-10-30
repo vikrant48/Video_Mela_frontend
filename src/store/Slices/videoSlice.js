@@ -17,7 +17,8 @@ const initialState = {
 export const getAllVideos = createAsyncThunk(
     "getAllVideos",
     // limit 100 = the backend's maximum page size (larger values are capped server-side)
-    async ({ userId, sortBy = "createdAt", sortType = "asc", query = "", page = 1, limit = 100 }) => {
+    // Default newest first: the home feed and a channel's "Latest" tab rely on it
+    async ({ userId, sortBy = "createdAt", sortType = "desc", query = "", page = 1, limit = 100 }) => {
         try {
             const params = new URLSearchParams()
 
