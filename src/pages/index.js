@@ -16,6 +16,7 @@ import Help from "./Help";
 import Feedback from "./Feedback";
 import ReportHistory from "./ReportHistory";
 import UploadVideoPage from "./UploadVideoPage";
+import NotFound from "./NotFound";
 
 export {
     Channel,
@@ -35,5 +36,6 @@ export {
     Help,
     Feedback,
     ReportHistory,
-    UploadVideoPage
+    UploadVideoPage,
+    NotFound
 }

@@ -23,6 +23,7 @@ import {
     ReportHistory,
     UploadVideoPage,
     VideoDetail,
+    NotFound,
 } from "./pages";
 import { EditPersonalInfo, Layout, Login, SignUp, ForgotPassword } from "./components";
 import {
@@ -225,6 +226,8 @@ function App() {
                             </AuthLayout>
                         }
                     />
+                    {/* Any unknown URL, shown inside the normal layout (navbar + sidebar) */}
+                    <Route path="*" element={<NotFound />} />
                 </Route>
                 <Route
                     path="/terms&conditions"
