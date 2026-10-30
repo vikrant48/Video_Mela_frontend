@@ -37,6 +37,7 @@ function AddToPlaylistModal({ isOpen, onClose, videoId }) {
             }
         } catch (error) {
             console.error("Error fetching playlists:", error);
+            toast.error(error?.response?.data?.message || "Failed to load your playlists.");
             setPlaylists([]);
         } finally {
             setFetchingPlaylists(false);
@@ -91,11 +92,11 @@ function AddToPlaylistModal({ isOpen, onClose, videoId }) {
                     )
                 );
                 
-                alert(`Video added to "${playlistName}" playlist!`);
+                toast.success(`Added to "${playlistName}"`);
             }
         } catch (error) {
             console.error("Error adding to playlist:", error);
-            alert("Failed to add video to playlist. Please try again.");
+            toast.error(error?.response?.data?.message || "Failed to add video to playlist. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -115,11 +116,11 @@ function AddToPlaylistModal({ isOpen, onClose, videoId }) {
                     )
                 );
                 
-                alert(`Video removed from "${playlistName}" playlist!`);
+                toast.success(`Removed from "${playlistName}"`);
             }
         } catch (error) {
             console.error("Error removing from playlist:", error);
-            alert("Failed to remove video from playlist. Please try again.");
+            toast.error(error?.response?.data?.message || "Failed to remove video from playlist. Please try again.");
         } finally {
             setLoading(false);
         }

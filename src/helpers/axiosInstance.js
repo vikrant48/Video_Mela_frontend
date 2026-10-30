@@ -112,11 +112,13 @@ axiosInstance.interceptors.response.use(
           timeout: originalRequest?.timeout
         }
       });
-      if (error.code === 'ECONNABORTED') {
-        toast.error('Backend connection timed out. Server may still be starting up, please try again in a moment.');
-      } else {
-        toast.error('Network error. Please check your backend connection.');
-      }
+      // No server reply, so no server message. Give the error the same shape as an API error
+      // instead of toasting here: each page then shows this message once, through its own error
+      // toast (toasting here as well produced a second, often blank, toast).
+      const message = error.code === 'ECONNABORTED'
+        ? 'Backend connection timed out. Server may still be starting up, please try again in a moment.'
+        : 'Network error. Please check your connection.';
+      error.response = { status: 0, data: { message, error: message } };
       return Promise.reject(error);
     }
 
@@ -183,24 +185,9 @@ axiosInstance.interceptors.response.use(
         }
         break;
 
-      case 403:
-        toast.error('Access forbidden. You don\'t have permission.');
-        break;
-
-      case 404:
-        toast.error('Resource not found.');
-        break;
-
-      case 429:
-        toast.error('Too many requests. Please try again later.');
-        break;
-
-      case 500:
-        toast.error('Server error. Please try again later.');
-        break;
-
       default:
-        // Let the component handle other errors
+        // 403/404/429/5xx etc.: no generic toast here. The page that made the request shows the
+        // server's specific message (a generic toast here as well made every error appear twice).
         break;
     }
 

@@ -52,7 +52,11 @@ export const getSubscribedChannels = createAsyncThunk(
             );
             return response.data.data;
         } catch (error) {
-            return error;
+            // Was `return error`, which resolved the thunk successfully with the error object as data
+            if (error?.response?.status !== 401) {
+                toast.error(error?.response?.data?.message || "Failed to load subscriptions");
+            }
+            throw error;
         }
     }
 );
@@ -81,6 +85,9 @@ const subscriptionSlice = createSlice({
         );
         builder.addCase(getSubscribedChannels.pending, (state) => {
             state.loading = true;
+        });
+        builder.addCase(getSubscribedChannels.rejected, (state) => {
+            state.loading = false;
         });
         builder.addCase(getSubscribedChannels.fulfilled, (state, action) => {
             state.loading = false;

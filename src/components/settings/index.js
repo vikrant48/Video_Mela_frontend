@@ -3,3 +3,4 @@ export { default as PrivacySettings } from "./PrivacySettings";
 export { default as NotificationSettings } from "./NotificationSettings";
 export { default as AppearanceSettings } from "./AppearanceSettings";
 export { default as SettingsNavigate } from "./SettingsNavigate";
+export { default as ComingSoon } from "./ComingSoon";

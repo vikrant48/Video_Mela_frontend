@@ -16,17 +16,20 @@ function SettingsNavigate() {
         {
             name: "Privacy",
             path: "/settings/privacy",
-            icon: <CiLock size={20} />
+            icon: <CiLock size={20} />,
+            comingSoon: true
         },
         {
             name: "Notifications",
             path: "/settings/notifications",
-            icon: <CiBellOn size={20} />
+            icon: <CiBellOn size={20} />,
+            comingSoon: true
         },
         {
             name: "Appearance",
             path: "/settings/appearance",
-            icon: <CiPalette size={20} />
+            icon: <CiPalette size={20} />,
+            comingSoon: true
         }
     ];
 
@@ -46,6 +49,11 @@ function SettingsNavigate() {
                     >
                         {item.icon}
                         {item.name}
+                        {item.comingSoon && (
+                            <span className="rounded bg-gray-700 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gray-300">
+                                Soon
+                            </span>
+                        )}
                     </NavLink>
                 ))}
             </nav>

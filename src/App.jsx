@@ -31,6 +31,7 @@ import {
     PrivacySettings,
     NotificationSettings,
     AppearanceSettings,
+    ComingSoon,
 } from "./components/settings";
 
 function App() {
@@ -173,7 +174,9 @@ function App() {
                             path="privacy"
                             element={
                                 <AuthLayout authentication>
-                                    <PrivacySettings />
+                                    <ComingSoon title="Privacy">
+                                        <PrivacySettings />
+                                    </ComingSoon>
                                 </AuthLayout>
                             }
                         />
@@ -181,7 +184,9 @@ function App() {
                             path="notifications"
                             element={
                                 <AuthLayout authentication>
-                                    <NotificationSettings />
+                                    <ComingSoon title="Notification">
+                                        <NotificationSettings />
+                                    </ComingSoon>
                                 </AuthLayout>
                             }
                         />
@@ -189,7 +194,9 @@ function App() {
                             path="appearance"
                             element={
                                 <AuthLayout authentication>
-                                    <AppearanceSettings />
+                                    <ComingSoon title="Appearance">
+                                        <AppearanceSettings />
+                                    </ComingSoon>
                                 </AuthLayout>
                             }
                         />

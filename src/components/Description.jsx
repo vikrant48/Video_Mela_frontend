@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toggleSubscription } from "../store/Slices/subscriptionSlice";
 import { MdPlaylistAdd, MdDownload } from "react-icons/md";
+import toast from "react-hot-toast";
 
 function Description({
     title,
@@ -66,7 +67,7 @@ function Description({
                 window.URL.revokeObjectURL(url);
             } catch (error) {
                 console.error('Download failed:', error);
-                alert('Failed to download video. Please try again.');
+                toast.error('Failed to download video. Please try again.');
             }
         }
     };
