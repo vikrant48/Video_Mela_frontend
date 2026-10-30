@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IoClose, IoAdd } from "react-icons/io5";
 import { MdPlaylistAdd, MdPlaylistPlay } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import axiosInstance from "../helpers/axiosInstance";
 
 function AddToPlaylistModal({ isOpen, onClose, videoId }) {
@@ -43,13 +44,14 @@ function AddToPlaylistModal({ isOpen, onClose, videoId }) {
     };
 
     const handleCreatePlaylist = async () => {
-        if (!newPlaylistName.trim()) return;
-        
+        // The backend requires both fields
+        if (!newPlaylistName.trim() || !newPlaylistDescription.trim()) return;
+
         setLoading(true);
         try {
             const response = await axiosInstance.post('/playlist', {
-                name: newPlaylistName,
-                description: newPlaylistDescription
+                name: newPlaylistName.trim(),
+                description: newPlaylistDescription.trim()
             });
             
             if (response.data.success) {
@@ -69,7 +71,7 @@ function AddToPlaylistModal({ isOpen, onClose, videoId }) {
             }
         } catch (error) {
             console.error("Error creating playlist:", error);
-            alert("Failed to create playlist. Please try again.");
+            toast.error(error?.response?.data?.message || "Failed to create playlist. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -173,7 +175,7 @@ function AddToPlaylistModal({ isOpen, onClose, videoId }) {
                                     className="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 focus:border-purple-500 focus:outline-none"
                                 />
                                 <textarea
-                                    placeholder="Description (optional)"
+                                    placeholder="Description"
                                     value={newPlaylistDescription}
                                     onChange={(e) => setNewPlaylistDescription(e.target.value)}
                                     className="w-full bg-gray-800 text-white p-2 rounded border border-gray-600 focus:border-purple-500 focus:outline-none h-20 resize-none"
@@ -181,7 +183,7 @@ function AddToPlaylistModal({ isOpen, onClose, videoId }) {
                                 <div className="flex gap-2">
                                     <button
                                         onClick={handleCreatePlaylist}
-                                        disabled={!newPlaylistName.trim() || loading}
+                                        disabled={!newPlaylistName.trim() || !newPlaylistDescription.trim() || loading}
                                         className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
                                         {loading ? "Creating..." : "Create"}
